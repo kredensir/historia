@@ -1,0 +1,524 @@
+{
+  "meta": {
+    "chapterId": "capitulo_1",
+    "blockId": "bloque_1_presentacion",
+    "title": "Capítulo 1 - Bloque 1: Presentación y recuerdos (versión extendida)",
+    "notes": "Placeholders: {{playerName}} = nombre del jugador, {{botName}} = nombre elegido para el bot. Imágenes son placeholders (img_01.png, etc) hasta que subas los archivos reales al CDN. Cada elección importante ramifica a nodos distintos (no todas las respuestas convergen al mismo texto)."
+  },
+  "variables": {
+    "affection": {
+      "initial": 50,
+      "min": 0,
+      "max": 100,
+      "description": "Sube o baja según las elecciones del jugador. Determina el tono del bot (text_by_affection) y, al final del capítulo, cuál de los 3 finales se dispara."
+    },
+    "flags": {
+      "description": "Banderas booleanas que se activan con ciertas elecciones y pueden usarse más adelante en el capítulo para callbacks (ej: si mencionó a 'Fede', el bot puede sacarlo a relucir en el bloque 3).",
+      "list": ["mencionoAFede", "confirmoInteres", "negoInteresDeVerdad", "seOfendioPorInsinuacion", "sintioCelosPorBruno", "preguntoQueIbaADecir"]
+    }
+  },
+  "thresholds_reference": {
+    "final_bueno": "affection >= 70 al final del bloque de cierre",
+    "final_malo": "affection entre 30 y 69",
+    "final_peor_discusion": "affection <= 29",
+    "note": "Estos umbrales se re-evalúan en el bloque de cierre; aquí solo se acumula el valor."
+  },
+  "nodes": [
+    {
+      "id": "c1_001",
+      "speaker": "bot",
+      "text": "Hola... sé que pasó tiempo. Mucho tiempo. Pero no dejaba de pensar en escribirte.",
+      "next": "c1_002"
+    },
+    {
+      "id": "c1_002",
+      "speaker": "bot",
+      "text": "No sé si todavía tienes este número guardado o si directamente me borraste de tu vida jaja",
+      "next": "c1_003"
+    },
+    {
+      "id": "c1_003",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "Jamás te borraría, tonto. Te tengo guardado como 'no contestar' desde 2019 😏", "effect": { "affection": 5 }, "next": "c1_004a" },
+        { "id": "b", "text": "Casi te borro varias veces, la verdad.", "effect": { "affection": -5 }, "next": "c1_004b" },
+        { "id": "c", "text": "Sí, te tengo. ¿Qué necesitas?", "effect": { "affection": -2 }, "next": "c1_004c" }
+      ]
+    },
+    {
+      "id": "c1_004a",
+      "speaker": "bot",
+      "text": "Jajaja 'no contestar', qué atrevida. Me lo merezco, seguramente. Al menos el apodo tiene encanto.",
+      "next": "c1_004a_2"
+    },
+    {
+      "id": "c1_004a_2",
+      "speaker": "bot",
+      "text": "Igual contestaste, así que no debe estar tan mal el ranking ahí adentro.",
+      "next": "c1_005"
+    },
+    {
+      "id": "c1_004b",
+      "speaker": "bot",
+      "text": "Ah. Eso duele un poco, pero lo entiendo. No te culpo, la verdad.",
+      "next": "c1_004b_2"
+    },
+    {
+      "id": "c1_004b_2",
+      "speaker": "player_choice",
+      "prompt": "El bot se puso serio de golpe. ¿Qué haces?",
+      "choices": [
+        { "id": "a", "text": "No te lo dije para lastimarte, fue en broma.", "effect": { "affection": 4 }, "next": "c1_005" },
+        { "id": "b", "text": "Es en serio. Tienes que ganarte que te conteste de nuevo.", "effect": { "affection": -3 }, "next": "c1_005" }
+      ]
+    },
+    {
+      "id": "c1_004c",
+      "speaker": "bot",
+      "text": "Uh, directo al grano. Bueno, ta bien, no vengo a pedirte nada todavía, tranquila.",
+      "next": "c1_005"
+    },
+    {
+      "id": "c1_005",
+      "speaker": "bot",
+      "text": "¿Te acuerdas cuánto hace que no hablamos en serio? No mensajes de cumpleaños ni likes perdidos. Hablar, hablar.",
+      "next": "c1_006"
+    },
+    {
+      "id": "c1_006",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "Como tres años, más o menos. Desde que dejamos de vernos con el grupo.", "effect": { "affection": 3 }, "next": "c1_007a" },
+        { "id": "b", "text": "No sé, no llevo la cuenta.", "effect": { "affection": -3 }, "next": "c1_007b" },
+        { "id": "c", "text": "Desde que tú decidiste desaparecer, para ser exactos.", "effect": { "affection": -6 }, "next": "c1_007c" }
+      ]
+    },
+    {
+      "id": "c1_007a",
+      "speaker": "bot",
+      "text": "Tienes razón. Fue una época rara para todos, ¿no? Nos fuimos perdiendo sin darnos cuenta, como que un día dejas de forzar el 'hay que juntarnos' y ya está.",
+      "next": "c1_008"
+    },
+    {
+      "id": "c1_007b",
+      "speaker": "bot",
+      "text": "Ja, yo tampoco. Prefiero no hacer cuentas, capaz me deprimo un poco.",
+      "next": "c1_008"
+    },
+    {
+      "id": "c1_007c",
+      "speaker": "bot",
+      "text": "Eso es justo. No voy a defenderme con excusas baratas ahora, en frío, por chat.",
+      "next": "c1_007c_2"
+    },
+    {
+      "id": "c1_007c_2",
+      "speaker": "player_choice",
+      "prompt": "Se hizo un silencio incómodo en la conversación. ¿Qué haces?",
+      "choices": [
+        { "id": "a", "text": "No te lo dije para pelear, solo constatar un hecho.", "effect": { "affection": 2 }, "next": "c1_008" },
+        { "id": "b", "text": "Bueno, ¿y? ¿Vas a explicarme algo o no?", "effect": { "affection": -2 }, "next": "c1_008" }
+      ]
+    },
+    {
+      "id": "c1_008",
+      "speaker": "bot",
+      "text": "¿Te acuerdas de aquella vez que casi incendiamos el asado de fin de año? Tú gritando con el extintor como si fuera una película de acción.",
+      "next": "c1_009"
+    },
+    {
+      "id": "c1_009",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "¡No fue mi culpa! Tú pusiste demasiado alcohol en la parrilla, pirómano.", "effect": { "affection": 6 }, "next": "c1_010a" },
+        { "id": "b", "text": "Me acuerdo que después nadie me dejó cocinar nunca más.", "effect": { "affection": 4 }, "next": "c1_010b" },
+        { "id": "c", "text": "Prefiero no acordarme de esa época, la verdad.", "effect": { "affection": -4 }, "next": "c1_010c" }
+      ]
+    },
+    {
+      "id": "c1_010a",
+      "speaker": "bot",
+      "text": "Jajajaja obvio que fue mi culpa, pero tú con el extintor parecías una heroína de acción barata. Nunca me voy a olvidar la cara que pusiste.",
+      "next": "c1_010_common"
+    },
+    {
+      "id": "c1_010b",
+      "speaker": "bot",
+      "text": "Es que casi le prendes fuego las cejas a Manu, era lo justo jajaja. Igual tu ensalada de esa noche estaba rara, para qué mentir.",
+      "next": "c1_010_common"
+    },
+    {
+      "id": "c1_010c",
+      "speaker": "bot",
+      "text": "Ok, entiendo. Perdón si te incomodo con esto, no era la intención, solo quería reírme un rato de algo lindo.",
+      "next": "c1_010c_2"
+    },
+    {
+      "id": "c1_010c_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        { "id": "a", "text": "No es que me moleste, es que hay recuerdos ahí que prefiero dejar quietos.", "effect": { "affection": 1 }, "next": "c1_010_common" },
+        { "id": "b", "text": "Cambiemos de tema, ¿quieres?", "effect": { "affection": -1 }, "next": "c1_011" }
+      ]
+    },
+    {
+      "id": "c1_010_common",
+      "speaker": "bot",
+      "text": "¿Sabes qué fue lo que más extrañé de esa época, en serio, sin broma?",
+      "next": "c1_010x"
+    },
+    {
+      "id": "c1_010x",
+      "speaker": "player_choice",
+      "prompt": "¿Qué le respondes?",
+      "choices": [
+        { "id": "a", "text": "¿Qué cosa?", "effect": { "affection": 0 }, "next": "c1_010x_open" },
+        { "id": "b", "text": "Seguro extrañaste comer gratis en todos los asados.", "effect": { "affection": 3 }, "next": "c1_010x_joke" },
+        { "id": "c", "text": "No sé, dime tú.", "effect": { "affection": 1 }, "next": "c1_010x_open" }
+      ]
+    },
+    {
+      "id": "c1_010x_joke",
+      "speaker": "bot",
+      "text": "Jajaja no te voy a mentir, algo de eso hay. Pero no, iba a decir otra cosa.",
+      "next": "c1_010x_open"
+    },
+    {
+      "id": "c1_010x_open",
+      "speaker": "bot",
+      "text": "Extrañé sentir que había un lugar donde encajaba sin esforzarme. Con tú en particular, no sé, siempre fue fácil hablar de cualquier cosa.",
+      "next": "c1_010x_reply"
+    },
+    {
+      "id": "c1_010x_reply",
+      "speaker": "player_choice",
+      "prompt": "Eso te movió algo por dentro. ¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "Sí... conmigo también era fácil. Todavía lo es, al parecer.", "effect": { "affection": 6 }, "next": "c1_011" },
+        { "id": "b", "text": "No te pongas sentimental tan rápido, recién arrancamos jaja.", "effect": { "affection": 3 }, "next": "c1_011" },
+        { "id": "c", "text": "No sé si estoy de acuerdo con eso, la verdad.", "effect": { "affection": -3 }, "next": "c1_011" }
+      ]
+    },
+    {
+      "id": "c1_011",
+      "speaker": "bot",
+      "text": "Mira, encontré esto revisando fotos viejas. No sé por qué las guardé tanto tiempo.",
+      "image": "img_01.png",
+      "image_alt": "Foto grupal antigua del grupo de amigos, incluye al jugador y al bot",
+      "next": "c1_012"
+    },
+    {
+      "id": "c1_012",
+      "speaker": "player_choice",
+      "prompt": "Reaccionas a la foto",
+      "choices": [
+        { "id": "a", "text": "Ay no, mira cómo estábamos vestidos, qué vergüenza jajaja", "effect": { "affection": 5 }, "next": "c1_013a" },
+        { "id": "b", "text": "Yo ahí estaba enamoradísima de alguien de esa foto, qué momentos.", "effect": { "affection": 8 }, "next": "c1_013b_intro", "tag": "insinuacion_romantica" },
+        { "id": "c", "text": "Borrá esa foto, por favor.", "effect": { "affection": -5 }, "next": "c1_013c" }
+      ]
+    },
+    {
+      "id": "c1_013a",
+      "speaker": "bot",
+      "text": "Jajaja sí, todos vestíamos horrible en esa época. Al menos teníamos excusa, éramos unos chicos sin criterio de moda alguno.",
+      "next": "c1_013a_2"
+    },
+    {
+      "id": "c1_013a_2",
+      "speaker": "bot",
+      "text": "Mira mi corte de pelo ahí, por favor. Eso no tiene perdón ni explicación posible.",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_013c",
+      "speaker": "bot",
+      "text": "Tienes razón, no debí mandarla sin avisar. La borro, perdón.",
+      "next": "c1_013c_2"
+    },
+    {
+      "id": "c1_013c_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        { "id": "a", "text": "Está bien, no pasa nada, solo avísame antes la próxima.", "effect": { "affection": 2 }, "next": "c1_014_lead" },
+        { "id": "b", "text": "Gracias por entender.", "effect": { "affection": 1 }, "next": "c1_014_lead" }
+      ]
+    },
+    {
+      "id": "c1_013b_intro",
+      "speaker": "bot",
+      "text": "¿Ah sí? ¿Y esa persona sabía que la mirabas así? Porque yo en esa foto no tenía idea de nada, evidentemente.",
+      "next": "c1_013b_choice"
+    },
+    {
+      "id": "c1_013b_choice",
+      "speaker": "player_choice",
+      "prompt": "El bot está tanteando si hablabas de él. ¿Qué haces?",
+      "choices": [
+        { "id": "a", "text": "Yo no dije que fueras tú, no te ilusiones tanto.", "effect": { "affection": 4 }, "next": "c1_013b_playful" },
+        { "id": "b", "text": "No, en realidad me gustaba Fede en esa época.", "effect": { "affection": -2 }, "next": "c1_013b_fede", "flag": "mencionoAFede" },
+        { "id": "c", "text": "¿Por qué asumes que hablo de tú? Qué ego tienes.", "effect": { "affection": -5 }, "next": "c1_013b_offended", "flag": "seOfendioPorInsinuacion" },
+        { "id": "d", "text": "Eso quedará en el misterio 😏", "effect": { "affection": 7 }, "next": "c1_013b_mystery" }
+      ]
+    },
+    {
+      "id": "c1_013b_playful",
+      "speaker": "bot",
+      "text": "Ah, ahora tienes que decirme quién era, no puedes dejarme así con la intriga. Es una falta de respeto, prácticamente.",
+      "next": "c1_013b_playful_2"
+    },
+    {
+      "id": "c1_013b_playful_2",
+      "speaker": "player_choice",
+      "prompt": "¿Le sigues el juego?",
+      "choices": [
+        { "id": "a", "text": "Era Nico, el del bajo. Tenía algo, no sé.", "effect": { "affection": 1 }, "next": "c1_013b_playful_nico" },
+        { "id": "b", "text": "No te voy a decir nada, quédate con las ganas.", "effect": { "affection": 5 }, "next": "c1_013b_playful_secreto" },
+        { "id": "c", "text": "¿Y tú? ¿Alguien de la foto te gustaba a tú?", "effect": { "affection": 6 }, "next": "c1_013b_turntables" }
+      ]
+    },
+    {
+      "id": "c1_013b_playful_nico",
+      "speaker": "bot",
+      "text": "¿Nico? Jajaja, no me lo esperaba. Bueno, mira tú, todo este tiempo pensando que sabía todo del grupo y resulta que no sabía nada.",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_013b_playful_secreto",
+      "speaker": "bot",
+      "text": "Está bien, está bien, respeto el misterio... por ahora. Pero esto no queda acá, ¿eh?",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_013b_turntables",
+      "speaker": "bot",
+      "text": "Uh, esa pregunta es peligrosa. Digamos que... había alguien, sí. Pero prefiero no decir quién, quizás algún día te cuento.",
+      "next": "c1_013b_turntables_2"
+    },
+    {
+      "id": "c1_013b_turntables_2",
+      "speaker": "player_choice",
+      "prompt": "Quedó picando la duda. ¿Qué haces?",
+      "choices": [
+        { "id": "a", "text": "Uy dale, no seas así, cuéntame.", "effect": { "affection": 3 }, "next": "c1_013b_turntables_push" },
+        { "id": "b", "text": "Bueno, guárdatelo entonces, misterioso.", "effect": { "affection": 4 }, "next": "c1_014_lead" }
+      ]
+    },
+    {
+      "id": "c1_013b_turntables_push",
+      "speaker": "bot",
+      "text": "No, no, todavía no. Algunas cosas se cuentan mejor en persona que por acá. Déjalo ahí guardado por ahora.",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_013b_fede",
+      "speaker": "bot",
+      "text": "¿Fede? ¿En serio? Nunca lo hubiera imaginado, la verdad. Ustedes dos ni se hablaban tanto.",
+      "next": "c1_013b_fede_2"
+    },
+    {
+      "id": "c1_013b_fede_2",
+      "speaker": "player_choice",
+      "prompt": "El bot suena raro, más cortante de lo normal. ¿Cómo sigues?",
+      "choices": [
+        { "id": "a", "text": "Es broma, no me gustaba nadie en particular jajaja.", "effect": { "affection": 4 }, "next": "c1_013b_fede_broma" },
+        { "id": "b", "text": "Es en serio. ¿Por qué te sorprende tanto?", "effect": { "affection": -4 }, "next": "c1_013b_fede_serio" }
+      ]
+    },
+    {
+      "id": "c1_013b_fede_broma",
+      "speaker": "bot",
+      "text": "Ah, casi me la creo. Por un segundo me generó como un... no sé, déjalo, no importa.",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_013b_fede_serio",
+      "speaker": "bot",
+      "text": "No sé, me sorprende porque nunca lo noté. Y porque, no sé, no me generaba muy buena espina, la verdad.",
+      "next": "c1_013b_fede_serio_2"
+    },
+    {
+      "id": "c1_013b_fede_serio_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "Fue hace mucho, ni sé por qué lo mencioné.", "effect": { "affection": 1 }, "next": "c1_014_lead" },
+        { "id": "b", "text": "¿Celoso, tal vez?", "effect": { "affection": 2 }, "next": "c1_013b_fede_celos", "flag": "negoInteresDeVerdad" }
+      ]
+    },
+    {
+      "id": "c1_013b_fede_celos",
+      "speaker": "bot",
+      "text": "Jaja, no, para nada... bueno, no sé. Cambiemos de tema, ¿sí?",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_013b_offended",
+      "speaker": "bot",
+      "text": "Ey, tranquila, era una broma. No quise sonar creído, perdón si sonó así.",
+      "next": "c1_013b_offended_2"
+    },
+    {
+      "id": "c1_013b_offended_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        { "id": "a", "text": "Tranquilo, tampoco fue para tanto, perdón por saltar así.", "effect": { "affection": 3 }, "next": "c1_014_lead" },
+        { "id": "b", "text": "Está bien, pero cuidado con las suposiciones.", "effect": { "affection": 0 }, "next": "c1_014_lead" }
+      ]
+    },
+    {
+      "id": "c1_013b_mystery",
+      "speaker": "bot",
+      "text": "Qué mala juegas. Bueno, me lo voy a tomar como que sí era yo, para mi propia paz mental.",
+      "next": "c1_014_lead"
+    },
+    {
+      "id": "c1_014_lead",
+      "speaker": "bot",
+      "text": "¿Sigues en contacto con alguien más del grupo? Yo la verdad perdí el rastro de casi todos.",
+      "next": "c1_014"
+    },
+    {
+      "id": "c1_014",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "Con un par sí, de vez en cuando nos juntamos y hablamos de tú, obvio.", "effect": { "affection": 4 }, "next": "c1_015a" },
+        { "id": "b", "text": "No, la verdad me alejé de todos después de lo que pasó.", "effect": { "affection": -3 }, "next": "c1_015b" }
+      ]
+    },
+    {
+      "id": "c1_015a",
+      "speaker": "bot",
+      "text": "¿Hablan de mí? Espero que solo cosas buenas... o no, total ya no puedo defenderme jaja.",
+      "next": "c1_015a_2"
+    },
+    {
+      "id": "c1_015a_2",
+      "speaker": "bot",
+      "text": "¿Sabes algo de Bruno, por casualidad? Hace como un año que no le contesta a nadie. Ni a la familia, según tengo entendido.",
+      "next": "c1_016"
+    },
+    {
+      "id": "c1_015b",
+      "speaker": "bot",
+      "text": "Tiene sentido, cada uno siguió su vida. A veces pienso que fuimos el grupo que más rápido se dispersó de todos.",
+      "next": "c1_015b_2"
+    },
+    {
+      "id": "c1_015b_2",
+      "speaker": "bot",
+      "text": "Igual te pregunto por si acaso: ¿sabes algo de Bruno? Hace como un año que está perdido, ni a la familia le contesta.",
+      "next": "c1_016"
+    },
+    {
+      "id": "c1_016",
+      "speaker": "player_choice",
+      "prompt": "El nombre de Bruno te genera una sensación rara. ¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "No, nada. Qué raro eso, la verdad me preocupa un poco.", "effect": { "affection": 3 }, "next": "c1_016a" },
+        { "id": "b", "text": "Ni idea, y honestamente no me interesa mucho saber.", "effect": { "affection": -2 }, "next": "c1_016b" },
+        { "id": "c", "text": "¿Por qué preguntas justo por él?", "effect": { "affection": 1 }, "next": "c1_016c", "flag": "sintioCelosPorBruno" }
+      ]
+    },
+    {
+      "id": "c1_016a",
+      "speaker": "bot",
+      "text": "Sí, a mí también. Seguro no es nada, la gente desaparece un tiempo y después reaparece como si nada. Pero bueno, un año es bastante.",
+      "next": "c1_017"
+    },
+    {
+      "id": "c1_016b",
+      "speaker": "bot",
+      "text": "Ja, entiendo, con él siempre fue así, medio a las suyas. Capaz no es nada.",
+      "next": "c1_017"
+    },
+    {
+      "id": "c1_016c",
+      "speaker": "bot",
+      "text": "Por nada en especial, es que fue el último que vi antes de irme de la ciudad. Se me quedó dando vueltas, nomás.",
+      "next": "c1_017"
+    },
+    {
+      "id": "c1_017",
+      "speaker": "bot",
+      "text": "Oye, en serio... me alegra mucho que me hayas contestado. No estaba seguro de que lo fueras a hacer.",
+      "next": "c1_018"
+    },
+    {
+      "id": "c1_018",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        { "id": "a", "text": "Sinceramente yo tampoco estaba segura, pero me hizo bien saber de tú.", "effect": { "affection": 7 }, "next": "c1_019a" },
+        { "id": "b", "text": "No sé todavía si hice bien en contestar.", "effect": { "affection": -2 }, "next": "c1_019b" },
+        { "id": "c", "text": "Fue por curiosidad, nada más.", "effect": { "affection": -4 }, "next": "c1_019c" }
+      ]
+    },
+    {
+      "id": "c1_019a",
+      "speaker": "bot",
+      "text": "Me quedo con eso, con que te hizo bien. Hace mucho que quería escribirte, solo que nunca encontraba el momento... o el valor.",
+      "next": "c1_019a_2"
+    },
+    {
+      "id": "c1_019a_2",
+      "speaker": "system",
+      "note": "El bot empieza a tipear, se detiene, borra, vuelve a tipear. Mostrar indicador de 'escribiendo...' de forma intermitente durante unos segundos antes de mostrar c1_019a_3, para generar tensión.",
+      "next": "c1_019a_3"
+    },
+    {
+      "id": "c1_019a_3",
+      "speaker": "bot",
+      "text": "Hay algo que quiero contarte, en realidad. Por eso te escribí hoy, no fue solo nostalgia.",
+      "next": "c1_020_gate"
+    },
+    {
+      "id": "c1_019b",
+      "speaker": "bot",
+      "text": "Está bien que dudes. Yo tampoco tengo muy en claro si hice bien en escribirte, la verdad, después de tanto tiempo.",
+      "next": "c1_019b_2"
+    },
+    {
+      "id": "c1_019b_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        { "id": "a", "text": "No dudo de que esté bien, dudo de mí, es distinto.", "effect": { "affection": 3 }, "next": "c1_020_gate" },
+        { "id": "b", "text": "Bueno, ya que estamos, terminemos la conversación al menos.", "effect": { "affection": 0 }, "next": "c1_020_gate" }
+      ]
+    },
+    {
+      "id": "c1_019c",
+      "speaker": "bot",
+      "text": "Con curiosidad se empieza, no está mal. Capaz con el tiempo se convierte en otra cosa. O capaz no, y está bien también.",
+      "next": "c1_019c_2"
+    },
+    {
+      "id": "c1_019c_2",
+      "speaker": "bot",
+      "text": "De cualquier forma, hay algo que te quería contar. No te escribí solo por nostalgia.",
+      "next": "c1_020_gate"
+    },
+    {
+      "id": "c1_020_gate",
+      "speaker": "player_choice",
+      "prompt": "¿Qué le respondes antes de que siga?",
+      "choices": [
+        { "id": "a", "text": "¿Qué cosa? Ahora me preocupaste un poco.", "effect": { "affection": 2 }, "next": "BLOCK_1_END" },
+        { "id": "b", "text": "Cuéntame, te escucho.", "effect": { "affection": 3 }, "next": "BLOCK_1_END" },
+        { "id": "c", "text": "Uh, suena serio. Dime que no es nada grave.", "effect": { "affection": 1 }, "next": "BLOCK_1_END" }
+      ]
+    },
+    {
+      "id": "BLOCK_1_END",
+      "speaker": "system",
+      "note": "Fin del bloque 1. El bloque 2 continúa desde acá: el bot cuenta que volvió a la ciudad y está en la casa de su familia, empolvada y abandonada, con intención de restaurarla en los días que esté ahí (está solo). La variable 'affection' y las 'flags' acumuladas hasta este punto pasan como estado inicial del bloque 2 (por ejemplo, si 'mencionoAFede' es true, o si 'sintioCelosPorBruno' es true, el bot puede referenciarlo más adelante para dar continuidad emocional)."
+    }
+  ]
+}
