@@ -32,3 +32,16 @@ CREATE POLICY "Permitir insert anónimo" ON sesiones_juego
 
 CREATE POLICY "Permitir lectura propia" ON sesiones_juego
   FOR SELECT TO anon USING (true);
+
+-- ============================================================
+-- MIGRACIÓN (ejecutar si la tabla ya existe de antes)
+-- ============================================================
+
+-- Columnas para ubicación aproximada por IP
+ALTER TABLE sesiones_juego ADD COLUMN IF NOT EXISTS ubicacion_pais TEXT;
+ALTER TABLE sesiones_juego ADD COLUMN IF NOT EXISTS ubicacion_ciudad TEXT;
+
+-- Política UPDATE: necesaria para guardar progreso, ubicación y finalizado
+DROP POLICY IF EXISTS "Permitir update anónimo" ON sesiones_juego;
+CREATE POLICY "Permitir update anónimo" ON sesiones_juego
+  FOR UPDATE TO anon USING (true) WITH CHECK (true);

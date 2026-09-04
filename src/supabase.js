@@ -9,8 +9,8 @@ import { createClient } from '@supabase/supabase-js'
 // 4. Copia "Project URL" y "anon public" key
 // 5. Reemplaza los valores de abajo:
 
-const SUPABASE_URL = 'https://TU_PROYECTO.supabase.co'
-const SUPABASE_ANON_KEY = 'TU_ANON_KEY_AQUI'
+const SUPABASE_URL = import.meta.env.VITE_SUPABASE_URL || 'https://TU_PROYECTO.supabase.co'
+const SUPABASE_ANON_KEY = import.meta.env.VITE_SUPABASE_ANON_KEY || 'TU_ANON_KEY_AQUI'
 
 // ============================================
 // CLIENTE
@@ -46,9 +46,53 @@ export async function guardarSesion(datos) {
 }
 
 /**
+ * Actualiza el progreso de la sesión con el array COMPLETO de elecciones.
+ * Se envía el array completo (no read-modify-write) para evitar condiciones
+ * de carrera: la app mantiene la lista local y Supabase solo la sobrescribe.
+ * @param {string} sesionId
+ * @param {Object} payload - { historiaActual, elecciones }
+ */
+export async function actualizarProgreso(sesionId, payload) {
+  const { data, error } = await supabase
+    .from('sesiones_juego')
+    .update({
+      historia_actual: payload.historiaActual,
+      elecciones: payload.elecciones,
+      fecha_actualizacion: new Date().toISOString()
+    })
+    .eq('id', sesionId)
+    .select('id')
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+/**
+ * Guarda la ubicación aproximada (por IP) de la sesión.
+ * Requiere la política RLS "Permitir update anónimo" (ver supabase-schema.sql).
+ */
+export async function actualizarUbicacion(sesionId, ubicacion) {
+  const { data, error } = await supabase
+    .from('sesiones_juego')
+    .update({
+      ubicacion_pais: ubicacion.pais || null,
+      ubicacion_ciudad: ubicacion.ciudad || null,
+      fecha_actualizacion: new Date().toISOString()
+    })
+    .eq('id', sesionId)
+    .select('id')
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+/**
  * Actualiza la sesión con una nueva elección
  * @param {string} sesionId - ID de la sesión
  * @param {Object} eleccion - { nodoActual, textoOpcion, timestamp }
+ * @deprecated Usar actualizarProgreso() con el array completo en su lugar.
  */
 export async function actualizarEleccion(sesionId, eleccion) {
   // Obtener sesión actual para append al array

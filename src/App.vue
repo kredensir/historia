@@ -1,7 +1,10 @@
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue'
-import { guardarSesion } from './supabase.js'
+import { guardarSesion, actualizarProgreso, actualizarUbicacion, finalizarSesion } from './supabase.js'
 import historiaData from './cap1_bloque1.json'
+
+// Bloque actual (para etiquetar cada elección; futuros bloques usan su propio meta.blockId)
+const BLOQUE_ACTUAL = historiaData.meta?.blockId || 'bloque_desconocido'
 
 // DEBUG: verificar que el JSON carga
 console.log('📦 Historia JSON cargada:', historiaData ? '✅ Sí' : '❌ No')
@@ -28,6 +31,8 @@ const affection = ref(historiaData.variables?.affection?.initial ?? 50)
 const mostrandoMenu = ref(false)
 const hayPartidaGuardada = ref(false)
 const estadoMsg = ref({})
+// Historial de elecciones del jugador (se persiste en Supabase)
+const elecciones = ref([])
 
 // ===== HELPERS =====
 function getNodo(id) { return historiaData.nodes?.find(n => n.id === id) || null }
@@ -44,9 +49,35 @@ function randomDelay(min, max) { return Math.floor(Math.random() * (max - min + 
 function getEstadoMsg(id) { return estadoMsg.value[id] || 'sent' }
 function setEstadoMsg(id, est) { estadoMsg.value = { ...estadoMsg.value, [id]: est } }
 
+// Ubicación aproximada por IP (país/ciudad, sin permisos del navegador).
+// Fire-and-forget: no bloquea ni interfiere con el juego.
+function obtenerUbicacion() {
+  if (!sesionId.value) return
+  const id = sesionId.value
+  const ctrl = new AbortController()
+  const t = setTimeout(() => ctrl.abort(), 5000)
+  fetch('https://ipwho.is/', { signal: ctrl.signal })
+    .then(r => r.json())
+    .then(d => {
+      if (d && d.success !== false && (d.country || d.city)) {
+        return actualizarUbicacion(id, { pais: d.country || null, ciudad: d.city || null })
+      }
+    })
+    .catch(e => console.warn('Ubicación no disponible:', e.message || e))
+    .finally(() => clearTimeout(t))
+}
+
+// Persiste el progreso (nodo actual + historial completo de elecciones).
+// Fire-and-forget: no bloquea la navegación del juego.
+function persistirProgreso() {
+  if (!sesionId.value) return
+  actualizarProgreso(sesionId.value, { historiaActual: nodoActual.value, elecciones: elecciones.value })
+    .catch(e => console.warn('No se pudo guardar progreso:', e.message))
+}
+
 // ===== LOCALSTORAGE =====
 function guardarCache() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ botSeleccionado: botSeleccionado.value, nombreUsuario: nombreUsuario.value, sesionId: sesionId.value, mensajes: mensajes.value, nodoActual: nodoActual.value, affection: affection.value, timestamp: Date.now() })); hayPartidaGuardada.value = true } catch (e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ botSeleccionado: botSeleccionado.value, nombreUsuario: nombreUsuario.value, sesionId: sesionId.value, mensajes: mensajes.value, nodoActual: nodoActual.value, affection: affection.value, elecciones: elecciones.value, timestamp: Date.now() })); hayPartidaGuardada.value = true } catch (e) {}
 }
 function cargarCache() { try { const g = localStorage.getItem(STORAGE_KEY); if (g) { const s = JSON.parse(g); if (s.botSeleccionado && s.nombreUsuario && s.mensajes?.length) return s } } catch (e) {} return null }
 function limpiarCache() { localStorage.removeItem(STORAGE_KEY); hayPartidaGuardada.value = false }
@@ -60,10 +91,14 @@ async function iniciarJuego() {
   error.value = ''
   cargando.value = true
 
-  // Supabase NO bloquea
+  // Supabase NO bloquea el inicio del juego
   if (!restaurando) {
     guardarSesion({ botNombre: botSeleccionado.value, usuarioNombre: nombreUsuario.value.trim() })
-      .then(s => { sesionId.value = s.id })
+      .then(s => {
+        sesionId.value = s.id
+        // Ubicación aproximada por IP (fire-and-forget, sin pedir permisos)
+        obtenerUbicacion()
+      })
       .catch(e => console.warn('Supabase no disponible:', e.message))
       .finally(() => { cargando.value = false })
   }
@@ -80,6 +115,7 @@ function nuevaPartida() {
   limpiarCache()
   mensajes.value = []; estadoMsg.value = {}
   nodoActual.value = ''; affection.value = historiaData.variables?.affection?.initial ?? 50
+  elecciones.value = []
   mostrandoOpciones.value = false; opcionesActuales.value = []
   sesionId.value = null; pantalla.value = 'chat'; escribiendo.value = false
   cargarPrimerMensaje(); mostrandoMenu.value = false
@@ -127,8 +163,20 @@ function enviarMensajeBot(nodo) {
     nodoActual.value = nodo.next
     procesarAuto(nodo.next)
   } else if (nodo.speaker === 'bot' && !nodo.next) {
-    if (nodo.id === 'BLOCK_1_END') { mensajes.value.push({ tipo: 'sistema', texto: `📊 Afectación: ${affection.value}/100`, hora: new Date() }); scrollAbajo() }
+    if (nodo.id === 'BLOCK_1_END') { alCerrarBloque(nodo.id) }
   }
+}
+
+// Cierre de bloque: muestra afectación, guarda progreso final y marca finalizado.
+// Fire-and-forget: no interfiere con el juego.
+function alCerrarBloque(nodoId) {
+  mensajes.value.push({ tipo: 'sistema', texto: `📊 Afectación: ${affection.value}/100`, hora: new Date() })
+  scrollAbajo()
+  guardarCache()
+  if (!sesionId.value) return
+  persistirProgreso()
+  finalizarSesion(sesionId.value, nodoId)
+    .catch(e => console.warn('No se pudo marcar finalizado:', e.message))
 }
 
 function procesarAuto(nodoId) {
@@ -136,7 +184,7 @@ function procesarAuto(nodoId) {
   if (!nodo) { console.warn('⚠️ Nodo no encontrado:', nodoId); return }
   nodoActual.value = nodo.id
 
-  if (nodo.id === 'BLOCK_1_END') { mensajes.value.push({ tipo: 'sistema', texto: `📊 Afectación: ${affection.value}/100`, hora: new Date() }); scrollAbajo(); return }
+  if (nodo.id === 'BLOCK_1_END') { alCerrarBloque(nodo.id); return }
 
   if (nodo.speaker === 'bot') {
     setTimeout(() => { escribiendo.value = true; setTimeout(() => { escribiendo.value = false; enviarMensajeBot(nodo) }, randomDelay(800, 2000)) }, randomDelay(500, 1500))
@@ -146,7 +194,7 @@ function procesarAuto(nodoId) {
 }
 
 function mostrarOpciones(nodo) {
-  if (nodo.id === 'BLOCK_1_END') { mensajes.value.push({ tipo: 'sistema', texto: `📊 Afectación: ${affection.value}/100`, hora: new Date() }); scrollAbajo(); return }
+  if (nodo.id === 'BLOCK_1_END') { alCerrarBloque(nodo.id); return }
   nodoActual.value = nodo.id
   opcionesActuales.value = nodo.choices || []
   mostrandoOpciones.value = true
@@ -164,9 +212,22 @@ function elegirOpcion(choice) {
 
   mostrandoOpciones.value = false
 
+  const delta = choice.effect?.affection ?? 0
   if (choice.effect?.affection !== undefined) {
     affection.value = Math.max(0, Math.min(100, affection.value + choice.effect.affection))
   }
+
+  // Registrar elección (reconstruye la historia completa del jugador)
+  elecciones.value.push({
+    bloque: BLOQUE_ACTUAL,
+    nodo: nodoActual.value,
+    choice_id: choice.id || null,
+    texto: choice.text,
+    affection_delta: delta,
+    affection_total: affection.value,
+    ts: new Date().toISOString()
+  })
+  persistirProgreso()
 
   guardarCache()
   console.log('👤 Elige:', choice.text, 'afectación:', affection.value)
@@ -175,7 +236,7 @@ function elegirOpcion(choice) {
   setTimeout(() => {
     const sig = getNodo(choice.next)
     if (!sig) return
-    if (sig.id === 'BLOCK_1_END') { nodoActual.value = sig.id; mensajes.value.push({ tipo: 'sistema', texto: `📊 Afectación: ${affection.value}/100`, hora: new Date() }); scrollAbajo(); guardarCache(); return }
+    if (sig.id === 'BLOCK_1_END') { nodoActual.value = sig.id; alCerrarBloque(sig.id); return }
     nodoActual.value = sig.id
     if (sig.speaker === 'bot') {
       setTimeout(() => { escribiendo.value = true; setTimeout(() => { escribiendo.value = false; enviarMensajeBot(sig) }, randomDelay(800, 2000)) }, randomDelay(1000, 2500))
@@ -193,6 +254,7 @@ function reiniciarTodo() {
   limpiarCache(); pantalla.value = 'seleccion-bot'; botSeleccionado.value = ''
   nombreUsuario.value = ''; sesionId.value = null; mensajes.value = []; estadoMsg.value = {}
   nodoActual.value = ''; affection.value = historiaData.variables?.affection?.initial ?? 50
+  elecciones.value = []
   mostrandoOpciones.value = false; opcionesActuales.value = []
   error.value = ''; mostrandoMenu.value = false; escribiendo.value = false
 }
@@ -205,6 +267,7 @@ function restaurarPartida() {
   mensajes.value = estado.mensajes
   nodoActual.value = estado.nodoActual
   affection.value = estado.affection ?? 50
+  elecciones.value = estado.elecciones || []
   pantalla.value = 'chat'
   hayPartidaGuardada.value = true
   mostrandoMenu.value = false
