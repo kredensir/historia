@@ -15,7 +15,7 @@ const BOTS = ['Juan', 'Ángel', 'Boris', 'Leo']
 const STORAGE_KEY = 'historia-chat-save'
 
 // ===== ESTADOS =====
-const pantalla = ref('seleccion-bot')
+const pantalla = ref('aviso')
 const botSeleccionado = ref('')
 const nombreUsuario = ref('')
 const sesionId = ref(null)
@@ -84,6 +84,7 @@ function limpiarCache() { localStorage.removeItem(STORAGE_KEY); hayPartidaGuarda
 function verificarCache() { hayPartidaGuardada.value = !!cargarCache() }
 
 // ===== LOGICA =====
+function continuarAviso() { pantalla.value = 'seleccion-bot' }
 function seleccionarBot(bot) { botSeleccionado.value = bot; pantalla.value = 'nombre-usuario' }
 
 async function iniciarJuego() {
@@ -251,7 +252,7 @@ function elegirOpcion(choice) {
 function toggleMenu() { mostrandoMenu.value = !mostrandoMenu.value }
 function cerrarMenu() { mostrandoMenu.value = false }
 function reiniciarTodo() {
-  limpiarCache(); pantalla.value = 'seleccion-bot'; botSeleccionado.value = ''
+  limpiarCache(); pantalla.value = 'aviso'; botSeleccionado.value = ''
   nombreUsuario.value = ''; sesionId.value = null; mensajes.value = []; estadoMsg.value = {}
   nodoActual.value = ''; affection.value = historiaData.variables?.affection?.initial ?? 50
   elecciones.value = []
@@ -312,12 +313,24 @@ onMounted(() => {
 
 <template>
   <div class="app">
+    <!-- PANTALLA 0: AVISO DE PRUEBA -->
+    <div v-if="pantalla === 'aviso'" class="pantalla sel">
+      <div class="tarjeta">
+        <div class="icono">⚠️</div>
+        <h1>Antes de empezar</h1>
+        <p class="subtitulo">Este juego es solo una versión de prueba. Puede contener errores, la historia está en desarrollo y puede no estar disponible en cualquier momento.</p>
+        <div class="form">
+          <button @click="continuarAviso()" class="btn-jugar">Entendido, continuar</button>
+        </div>
+      </div>
+    </div>
+
     <!-- PANTALLA 1 -->
     <div v-if="pantalla === 'seleccion-bot'" class="pantalla sel">
       <div class="tarjeta">
-        <div class="icono">🤖</div>
-        <h1>Elige a tu compañero</h1>
-        <p class="subtitulo">Selecciona el nombre del bot</p>
+        <div class="icono">💬</div>
+        <h1>Alguien quiere hablar contigo</h1>
+        <p class="subtitulo">Un amigo del pasado consiguió tu número después de años sin verse. Elige quién te está escribiendo...</p>
         <div class="bots-grid">
           <button v-for="bot in BOTS" :key="bot" @click="seleccionarBot(bot)" class="bot-btn" :class="{ sel: botSeleccionado === bot }">
             <span class="avatar">{{ bot[0] }}</span>
@@ -334,8 +347,8 @@ onMounted(() => {
     <div v-else-if="pantalla === 'nombre-usuario'" class="pantalla sel">
       <div class="tarjeta">
         <div class="icono">✨</div>
-        <h1>¿Cómo te llamas?</h1>
-        <p class="subtitulo">{{ botSeleccionado }} está listo</p>
+        <h1>¿Quién eres?</h1>
+        <p class="subtitulo">{{ botSeleccionado }} está por escribirte después de tanto tiempo. Escribe tu nombre para que sepa que eres tú.</p>
         <div class="form">
           <input v-model="nombreUsuario" type="text" placeholder="Tu nombre..." @keydown.enter="iniciarJuego()" />
           <p v-if="error" class="err">{{ error }}</p>
