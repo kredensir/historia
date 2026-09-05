@@ -1,0 +1,2484 @@
+{
+  "meta": {
+    "chapterId": "capitulo_1",
+    "blockId": "bloque_2_revelacion_casa",
+    "title": "Capítulo 1 - Bloque 2: La casa y la vida de cada uno",
+    "notes": "Continúa directamente después de BLOCK_1_END del bloque 1. El valor de 'affection' y las 'flags' activadas en el bloque 1 se cargan como estado inicial de este bloque (no se reinician). Placeholders: {{playerName}}, {{botName}}. Imágenes son placeholders (img_02.png, etc). Los mini-quiz de profesión (medicina, docencia, emprendimiento) están escritos como una cadena explícita de nodos: cada combinación de aciertos/errores lleva a un nodo de texto ya redactado, sin necesidad de que el motor evalúe condiciones — solo debe seguir 'text' y 'next'/'choices' como en el resto del juego."
+  },
+  "variables": {
+    "affection": {
+      "carried_over_from": "bloque_1_presentacion",
+      "min": 0,
+      "max": 100
+    },
+    "flags": {
+      "description": "Se suman a las flags ya activadas en el bloque 1.",
+      "list": [
+        "occupation_medicina",
+        "occupation_estudio",
+        "occupation_docencia",
+        "occupation_emprendimiento",
+        "occupation_noResponder",
+        "confirmoSoltera",
+        "confirmoEnPareja",
+        "noRespondioEstadoSentimental",
+        "leDioVueltaLaPregunta",
+        "recordoLaCasa"
+      ]
+    }
+  },
+  "nodes": [
+    {
+      "id": "c2_001",
+      "speaker": "bot",
+      "text": "Bueno... allá voy, entonces. Hace unos días volví a la ciudad.",
+      "next": "c2_002"
+    },
+    {
+      "id": "c2_002",
+      "speaker": "bot",
+      "text": "Estoy en la casa de mi familia, la que quedó vacía hace años. Está todo empolvado, bastante abandonado, la verdad.",
+      "next": "c2_003"
+    },
+    {
+      "id": "c2_003",
+      "speaker": "bot",
+      "text": "Pensaba quedarme unos días para arreglarla un poco. Total estoy solo por acá, no tengo mucho más que hacer.",
+      "next": "c2_004"
+    },
+    {
+      "id": "c2_004",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo reaccionas a la noticia?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "¿Solo? Qué manera tan dramática de decir que nadie te visita.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c2_005a"
+        },
+        {
+          "id": "b",
+          "text": "¿Volviste para quedarte, o es algo temporal?",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c2_005b"
+        },
+        {
+          "id": "c",
+          "text": "Ah. ¿Y me cuentas esto porque...?",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c2_005c"
+        }
+      ]
+    },
+    {
+      "id": "c2_005a",
+      "speaker": "bot",
+      "text": "Jaja, un poco sí. Aunque tampoco esperaba compañía, para ser sincero. Es raro estar en esta casa después de tanto tiempo.",
+      "next": "c2_006"
+    },
+    {
+      "id": "c2_005b",
+      "speaker": "bot",
+      "text": "Todavía no lo sé bien. Depende de varias cosas, la verdad, no quiero prometer nada todavía.",
+      "next": "c2_006"
+    },
+    {
+      "id": "c2_005c",
+      "speaker": "bot",
+      "text": "Te lo cuento porque quería que lo supieras, nada más. No hay una segunda intención escondida, si es lo que piensas.",
+      "next": "c2_005c_2"
+    },
+    {
+      "id": "c2_005c_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "No pensaba eso, perdón si sonó cortante.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c2_006"
+        },
+        {
+          "id": "b",
+          "text": "Está bien, gracias por avisarme entonces.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c2_006"
+        }
+      ]
+    },
+    {
+      "id": "c2_006",
+      "speaker": "bot",
+      "text": "Mira, te mando una foto para que veas el desastre del que hablo.",
+      "image": "img_02.png",
+      "image_alt": "Interior de una casa antigua, empolvada, con cajas y muebles cubiertos",
+      "next": "c2_007"
+    },
+    {
+      "id": "c2_007",
+      "speaker": "player_choice",
+      "prompt": "Reaccionas a la foto de la casa",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Vaya, parece que nadie entra ahí hace una década.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c2_008a"
+        },
+        {
+          "id": "b",
+          "text": "Se ve como el escenario perfecto de una película de terror.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c2_008b"
+        },
+        {
+          "id": "c",
+          "text": "Bueno, tampoco es tan grave, se ve arreglable.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c2_008c"
+        }
+      ]
+    },
+    {
+      "id": "c2_008a",
+      "speaker": "bot",
+      "text": "Prácticamente. Hay una capa de polvo que parece tener vida propia, te lo juro.",
+      "next": "c2_009"
+    },
+    {
+      "id": "c2_008b",
+      "speaker": "bot",
+      "text": "No digas eso, ya me está costando dormir tranquilo aquí jaja.",
+      "next": "c2_009"
+    },
+    {
+      "id": "c2_008c",
+      "speaker": "bot",
+      "text": "Ojalá tengas razón. Voy a necesitar mucha paciencia, eso seguro.",
+      "next": "c2_009"
+    },
+    {
+      "id": "c2_009",
+      "speaker": "bot",
+      "text": "En fin, suficiente sobre la casa por ahora. Cuéntame de ti, mejor. ¿A qué te dedicas ahora? Perdí totalmente el rastro de eso.",
+      "next": "c2_010"
+    },
+    {
+      "id": "c2_010",
+      "speaker": "player_choice",
+      "prompt": "¿Qué le respondes sobre a qué te dedicas?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Estoy estudiando medicina, va a ser un camino largo pero vale la pena.",
+          "effect": {
+            "affection": 5
+          },
+          "next": "med_quiz_intro",
+          "flag": "occupation_medicina"
+        },
+        {
+          "id": "b",
+          "text": "Estoy terminando mis estudios todavía, nada muy definido aún.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c2_011b",
+          "flag": "occupation_estudio"
+        },
+        {
+          "id": "c",
+          "text": "Me dedico a la educación, doy clases.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "doc_quiz_intro",
+          "flag": "occupation_docencia"
+        },
+        {
+          "id": "d",
+          "text": "Tengo mi propio emprendimiento, algo que empecé de cero.",
+          "effect": {
+            "affection": 5
+          },
+          "next": "emp_quiz_intro",
+          "flag": "occupation_emprendimiento"
+        },
+        {
+          "id": "e",
+          "text": "Prefiero no contarte todavía, quizás más adelante.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c2_011e",
+          "flag": "occupation_noResponder"
+        }
+      ]
+    },
+    {
+      "id": "med_quiz_intro",
+      "speaker": "bot",
+      "text": "Medicina, eh. Vamos a ver si es cierto o si me estás tomando el pelo. Te hago un par de preguntas que cualquiera que estudie medicina debería saber, sin importar la especialidad.",
+      "next": "med_q1_ask_start"
+    },
+    {
+      "id": "med_q1_ask_start",
+      "speaker": "bot",
+      "text": "Para calentar, algo básico: ¿cuántos huesos tiene el esqueleto de un adulto humano?",
+      "next": "med_q1_start"
+    },
+    {
+      "id": "med_q1_start",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "206",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q1_react_start_a"
+        },
+        {
+          "id": "b",
+          "text": "300",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q1_react_start_b"
+        },
+        {
+          "id": "c",
+          "text": "150",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q1_react_start_c"
+        },
+        {
+          "id": "d",
+          "text": "260",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q1_react_start_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q1_react_start_a",
+      "speaker": "bot",
+      "text": "Bien, un punto para ti.",
+      "next": "med_q2_ask_C"
+    },
+    {
+      "id": "med_q1_react_start_b",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "med_q2_ask_W"
+    },
+    {
+      "id": "med_q1_react_start_c",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "med_q2_ask_W"
+    },
+    {
+      "id": "med_q1_react_start_d",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "med_q2_ask_W"
+    },
+    {
+      "id": "med_q2_ask_C",
+      "speaker": "bot",
+      "text": "¿Cuál es el hueso más largo del cuerpo humano?",
+      "next": "med_q2_C"
+    },
+    {
+      "id": "med_q2_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Fémur",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q2_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "Húmero",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q2_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "Tibia",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q2_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "Columna vertebral",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q2_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q2_react_C_a",
+      "speaker": "bot",
+      "text": "Correcto. Vamos mejorando.",
+      "next": "med_q3_ask_C"
+    },
+    {
+      "id": "med_q2_react_C_b",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta la maestra de biología del colegio.",
+      "next": "med_q3_ask_M"
+    },
+    {
+      "id": "med_q2_react_C_c",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta la maestra de biología del colegio.",
+      "next": "med_q3_ask_M"
+    },
+    {
+      "id": "med_q2_react_C_d",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta la maestra de biología del colegio.",
+      "next": "med_q3_ask_M"
+    },
+    {
+      "id": "med_q2_ask_W",
+      "speaker": "bot",
+      "text": "¿Cuál es el hueso más largo del cuerpo humano?",
+      "next": "med_q2_W"
+    },
+    {
+      "id": "med_q2_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Fémur",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q2_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "Húmero",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q2_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "Tibia",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q2_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "Columna vertebral",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q2_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q2_react_W_a",
+      "speaker": "bot",
+      "text": "Correcto. Vamos mejorando.",
+      "next": "med_q3_ask_M"
+    },
+    {
+      "id": "med_q2_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q3_ask_W"
+    },
+    {
+      "id": "med_q2_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q3_ask_W"
+    },
+    {
+      "id": "med_q2_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q3_ask_W"
+    },
+    {
+      "id": "med_q3_ask_C",
+      "speaker": "bot",
+      "text": "¿Cuántas cámaras tiene el corazón humano?",
+      "next": "med_q3_C"
+    },
+    {
+      "id": "med_q3_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "3",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "4",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q3_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "6",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q3_react_C_a",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya pisado una facultad de medicina.",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_react_C_b",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya pisado una facultad de medicina.",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_react_C_c",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "med_q4_ask_C"
+    },
+    {
+      "id": "med_q3_react_C_d",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya pisado una facultad de medicina.",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_ask_M",
+      "speaker": "bot",
+      "text": "¿Cuántas cámaras tiene el corazón humano?",
+      "next": "med_q3_M"
+    },
+    {
+      "id": "med_q3_M",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_M_a"
+        },
+        {
+          "id": "b",
+          "text": "3",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_M_b"
+        },
+        {
+          "id": "c",
+          "text": "4",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q3_react_M_c"
+        },
+        {
+          "id": "d",
+          "text": "6",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_M_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q3_react_M_a",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_react_M_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_react_M_c",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_react_M_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_ask_W",
+      "speaker": "bot",
+      "text": "¿Cuántas cámaras tiene el corazón humano?",
+      "next": "med_q3_W"
+    },
+    {
+      "id": "med_q3_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "3",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "4",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q3_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "6",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q3_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q3_react_W_a",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q4_ask_W"
+    },
+    {
+      "id": "med_q3_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q4_ask_W"
+    },
+    {
+      "id": "med_q3_react_W_c",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "med_q4_ask_M"
+    },
+    {
+      "id": "med_q3_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿estudiaste algo de esto o lo estás inventando todo?",
+      "next": "med_q4_ask_W"
+    },
+    {
+      "id": "med_q4_ask_C",
+      "speaker": "bot",
+      "text": "Aproximadamente, ¿cuál se considera una presión arterial normal en un adulto?",
+      "next": "med_q4_C"
+    },
+    {
+      "id": "med_q4_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "90/60",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "120/80",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q4_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "160/100",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "200/120",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q4_react_C_a",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya pisado una facultad de medicina.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_react_C_b",
+      "speaker": "bot",
+      "text": "¡Exacto! Contestaste todo bien, no lo puedo creer.",
+      "next": "c2_011a"
+    },
+    {
+      "id": "med_q4_react_C_c",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya pisado una facultad de medicina.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_react_C_d",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya pisado una facultad de medicina.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_ask_M",
+      "speaker": "bot",
+      "text": "Aproximadamente, ¿cuál se considera una presión arterial normal en un adulto?",
+      "next": "med_q4_M"
+    },
+    {
+      "id": "med_q4_M",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "90/60",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_M_a"
+        },
+        {
+          "id": "b",
+          "text": "120/80",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q4_react_M_b"
+        },
+        {
+          "id": "c",
+          "text": "160/100",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_M_c"
+        },
+        {
+          "id": "d",
+          "text": "200/120",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_M_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q4_react_M_a",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_react_M_b",
+      "speaker": "bot",
+      "text": "Bien esa, al menos una te salvó.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_react_M_c",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_react_M_d",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_ask_W",
+      "speaker": "bot",
+      "text": "Aproximadamente, ¿cuál se considera una presión arterial normal en un adulto?",
+      "next": "med_q4_W"
+    },
+    {
+      "id": "med_q4_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "90/60",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "120/80",
+          "effect": {
+            "affection": 1
+          },
+          "next": "med_q4_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "160/100",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "200/120",
+          "effect": {
+            "affection": -1
+          },
+          "next": "med_q4_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "med_q4_react_W_a",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "med_q4_react_W_b",
+      "speaker": "bot",
+      "text": "Bien esa, al menos una te salvó.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "med_q4_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "med_q4_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "doc_quiz_intro",
+      "speaker": "bot",
+      "text": "Docente, eh. A ver, un par de preguntas que cualquier persona dedicada a la enseñanza debería poder responder, sin importar el nivel en el que dé clases.",
+      "next": "doc_q1_ask_start"
+    },
+    {
+      "id": "doc_q1_ask_start",
+      "speaker": "bot",
+      "text": "¿Qué es la taxonomía de Bloom?",
+      "next": "doc_q1_start"
+    },
+    {
+      "id": "doc_q1_start",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Una clasificación de niveles de aprendizaje, de lo más simple a lo más complejo",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q1_react_start_a"
+        },
+        {
+          "id": "b",
+          "text": "Un método para calificar exámenes de opción múltiple",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q1_react_start_b"
+        },
+        {
+          "id": "c",
+          "text": "Una técnica de meditación para antes de dar clases",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q1_react_start_c"
+        },
+        {
+          "id": "d",
+          "text": "El nombre de un software de gestión escolar",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q1_react_start_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q1_react_start_a",
+      "speaker": "bot",
+      "text": "Bien, un punto para ti.",
+      "next": "doc_q2_ask_C"
+    },
+    {
+      "id": "doc_q1_react_start_b",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "doc_q2_ask_W"
+    },
+    {
+      "id": "doc_q1_react_start_c",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "doc_q2_ask_W"
+    },
+    {
+      "id": "doc_q1_react_start_d",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "doc_q2_ask_W"
+    },
+    {
+      "id": "doc_q2_ask_C",
+      "speaker": "bot",
+      "text": "¿Cuál es la diferencia principal entre una evaluación formativa y una sumativa?",
+      "next": "doc_q2_C"
+    },
+    {
+      "id": "doc_q2_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "La formativa se da durante el proceso de aprendizaje, la sumativa al final",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q2_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "La formativa es siempre oral y la sumativa siempre escrita",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q2_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "No hay ninguna diferencia real entre las dos",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q2_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "La sumativa es exclusiva de primaria",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q2_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q2_react_C_a",
+      "speaker": "bot",
+      "text": "Correcto. Vamos mejorando.",
+      "next": "doc_q3_ask_C"
+    },
+    {
+      "id": "doc_q2_react_C_b",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta el primer día de una carrera de pedagogía.",
+      "next": "doc_q3_ask_M"
+    },
+    {
+      "id": "doc_q2_react_C_c",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta el primer día de una carrera de pedagogía.",
+      "next": "doc_q3_ask_M"
+    },
+    {
+      "id": "doc_q2_react_C_d",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta el primer día de una carrera de pedagogía.",
+      "next": "doc_q3_ask_M"
+    },
+    {
+      "id": "doc_q2_ask_W",
+      "speaker": "bot",
+      "text": "¿Cuál es la diferencia principal entre una evaluación formativa y una sumativa?",
+      "next": "doc_q2_W"
+    },
+    {
+      "id": "doc_q2_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "La formativa se da durante el proceso de aprendizaje, la sumativa al final",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q2_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "La formativa es siempre oral y la sumativa siempre escrita",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q2_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "No hay ninguna diferencia real entre las dos",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q2_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "La sumativa es exclusiva de primaria",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q2_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q2_react_W_a",
+      "speaker": "bot",
+      "text": "Correcto. Vamos mejorando.",
+      "next": "doc_q3_ask_M"
+    },
+    {
+      "id": "doc_q2_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q3_ask_W"
+    },
+    {
+      "id": "doc_q2_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q3_ask_W"
+    },
+    {
+      "id": "doc_q2_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q3_ask_W"
+    },
+    {
+      "id": "doc_q3_ask_C",
+      "speaker": "bot",
+      "text": "¿Qué es el 'currículo oculto' en educación?",
+      "next": "doc_q3_C"
+    },
+    {
+      "id": "doc_q3_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "El programa de estudios que todavía no se publicó",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "Los valores y aprendizajes que se transmiten sin estar explícitos en el programa oficial",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q3_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "Un currículo alternativo solo para estudiantes avanzados",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "La lista de materias eliminadas del plan de estudios",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q3_react_C_a",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya dado una clase alguna vez.",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_react_C_b",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "doc_q4_ask_C"
+    },
+    {
+      "id": "doc_q3_react_C_c",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya dado una clase alguna vez.",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_react_C_d",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya dado una clase alguna vez.",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_ask_M",
+      "speaker": "bot",
+      "text": "¿Qué es el 'currículo oculto' en educación?",
+      "next": "doc_q3_M"
+    },
+    {
+      "id": "doc_q3_M",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "El programa de estudios que todavía no se publicó",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_M_a"
+        },
+        {
+          "id": "b",
+          "text": "Los valores y aprendizajes que se transmiten sin estar explícitos en el programa oficial",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q3_react_M_b"
+        },
+        {
+          "id": "c",
+          "text": "Un currículo alternativo solo para estudiantes avanzados",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_M_c"
+        },
+        {
+          "id": "d",
+          "text": "La lista de materias eliminadas del plan de estudios",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_M_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q3_react_M_a",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_react_M_b",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_react_M_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_react_M_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_ask_W",
+      "speaker": "bot",
+      "text": "¿Qué es el 'currículo oculto' en educación?",
+      "next": "doc_q3_W"
+    },
+    {
+      "id": "doc_q3_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "El programa de estudios que todavía no se publicó",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "Los valores y aprendizajes que se transmiten sin estar explícitos en el programa oficial",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q3_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "Un currículo alternativo solo para estudiantes avanzados",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "La lista de materias eliminadas del plan de estudios",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q3_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q3_react_W_a",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q4_ask_W"
+    },
+    {
+      "id": "doc_q3_react_W_b",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "doc_q4_ask_M"
+    },
+    {
+      "id": "doc_q3_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q4_ask_W"
+    },
+    {
+      "id": "doc_q3_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿diste clases alguna vez o lo estás inventando todo?",
+      "next": "doc_q4_ask_W"
+    },
+    {
+      "id": "doc_q4_ask_C",
+      "speaker": "bot",
+      "text": "Según Piaget, ¿alrededor de qué edad comienza la etapa de las operaciones formales?",
+      "next": "doc_q4_C"
+    },
+    {
+      "id": "doc_q4_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "7 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "11 o 12 años",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q4_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "18 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q4_react_C_a",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya dado una clase alguna vez.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_react_C_b",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya dado una clase alguna vez.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_react_C_c",
+      "speaker": "bot",
+      "text": "¡Exacto! Contestaste todo bien, no lo puedo creer.",
+      "next": "c2_011c"
+    },
+    {
+      "id": "doc_q4_react_C_d",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que haya dado una clase alguna vez.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_ask_M",
+      "speaker": "bot",
+      "text": "Según Piaget, ¿alrededor de qué edad comienza la etapa de las operaciones formales?",
+      "next": "doc_q4_M"
+    },
+    {
+      "id": "doc_q4_M",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_M_a"
+        },
+        {
+          "id": "b",
+          "text": "7 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_M_b"
+        },
+        {
+          "id": "c",
+          "text": "11 o 12 años",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q4_react_M_c"
+        },
+        {
+          "id": "d",
+          "text": "18 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_M_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q4_react_M_a",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_react_M_b",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_react_M_c",
+      "speaker": "bot",
+      "text": "Bien esa, al menos una te salvó.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_react_M_d",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_ask_W",
+      "speaker": "bot",
+      "text": "Según Piaget, ¿alrededor de qué edad comienza la etapa de las operaciones formales?",
+      "next": "doc_q4_W"
+    },
+    {
+      "id": "doc_q4_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "2 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "7 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "11 o 12 años",
+          "effect": {
+            "affection": 1
+          },
+          "next": "doc_q4_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "18 años",
+          "effect": {
+            "affection": -1
+          },
+          "next": "doc_q4_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "doc_q4_react_W_a",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "doc_q4_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "doc_q4_react_W_c",
+      "speaker": "bot",
+      "text": "Bien esa, al menos una te salvó.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "doc_q4_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "emp_quiz_intro",
+      "speaker": "bot",
+      "text": "Un emprendimiento propio. Bueno, a ver qué tan en serio te lo tomas: unas preguntas básicas que cualquier emprendedor debería manejar.",
+      "next": "emp_q1_ask_start"
+    },
+    {
+      "id": "emp_q1_ask_start",
+      "speaker": "bot",
+      "text": "¿Qué significa la sigla MVP en el mundo de los emprendimientos?",
+      "next": "emp_q1_start"
+    },
+    {
+      "id": "emp_q1_start",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Producto Mínimo Viable",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q1_react_start_a"
+        },
+        {
+          "id": "b",
+          "text": "Modelo de Ventas Personalizado",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q1_react_start_b"
+        },
+        {
+          "id": "c",
+          "text": "Marca de Valor Premium",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q1_react_start_c"
+        },
+        {
+          "id": "d",
+          "text": "Método de Validación Profesional",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q1_react_start_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q1_react_start_a",
+      "speaker": "bot",
+      "text": "Bien, un punto para ti.",
+      "next": "emp_q2_ask_C"
+    },
+    {
+      "id": "emp_q1_react_start_b",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "emp_q2_ask_W"
+    },
+    {
+      "id": "emp_q1_react_start_c",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "emp_q2_ask_W"
+    },
+    {
+      "id": "emp_q1_react_start_d",
+      "speaker": "bot",
+      "text": "No es esa. Pero bueno, vamos empezando, no seré tan duro todavía.",
+      "next": "emp_q2_ask_W"
+    },
+    {
+      "id": "emp_q2_ask_C",
+      "speaker": "bot",
+      "text": "¿Qué es el punto de equilibrio de un negocio?",
+      "next": "emp_q2_C"
+    },
+    {
+      "id": "emp_q2_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "El momento en que los ingresos igualan exactamente a los costos",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q2_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "El día del año en que se factura más dinero",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q2_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "El límite legal de ventas sin pagar impuestos",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q2_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "El punto en el que hay que cerrar el negocio",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q2_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q2_react_C_a",
+      "speaker": "bot",
+      "text": "Correcto. Vamos mejorando.",
+      "next": "emp_q3_ask_C"
+    },
+    {
+      "id": "emp_q2_react_C_b",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta el primer día de un curso de negocios.",
+      "next": "emp_q3_ask_M"
+    },
+    {
+      "id": "emp_q2_react_C_c",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta el primer día de un curso de negocios.",
+      "next": "emp_q3_ask_M"
+    },
+    {
+      "id": "emp_q2_react_C_d",
+      "speaker": "bot",
+      "text": "No, esa tampoco. Ahí va tu primer tropiezo, pero esto lo pregunta hasta el primer día de un curso de negocios.",
+      "next": "emp_q3_ask_M"
+    },
+    {
+      "id": "emp_q2_ask_W",
+      "speaker": "bot",
+      "text": "¿Qué es el punto de equilibrio de un negocio?",
+      "next": "emp_q2_W"
+    },
+    {
+      "id": "emp_q2_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "El momento en que los ingresos igualan exactamente a los costos",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q2_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "El día del año en que se factura más dinero",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q2_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "El límite legal de ventas sin pagar impuestos",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q2_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "El punto en el que hay que cerrar el negocio",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q2_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q2_react_W_a",
+      "speaker": "bot",
+      "text": "Correcto. Vamos mejorando.",
+      "next": "emp_q3_ask_M"
+    },
+    {
+      "id": "emp_q2_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q3_ask_W"
+    },
+    {
+      "id": "emp_q2_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q3_ask_W"
+    },
+    {
+      "id": "emp_q2_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q3_ask_W"
+    },
+    {
+      "id": "emp_q3_ask_C",
+      "speaker": "bot",
+      "text": "En el contexto de un emprendimiento, ¿qué es un 'pitch'?",
+      "next": "emp_q3_C"
+    },
+    {
+      "id": "emp_q3_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Una presentación breve para vender tu idea a inversores o clientes",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q3_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "El logo de la marca",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "El primer cliente que compra el producto",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "Un tipo de préstamo bancario",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q3_react_C_a",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "emp_q4_ask_C"
+    },
+    {
+      "id": "emp_q3_react_C_b",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que tenga un negocio propio.",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_react_C_c",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que tenga un negocio propio.",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_react_C_d",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que tenga un negocio propio.",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_ask_M",
+      "speaker": "bot",
+      "text": "En el contexto de un emprendimiento, ¿qué es un 'pitch'?",
+      "next": "emp_q3_M"
+    },
+    {
+      "id": "emp_q3_M",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Una presentación breve para vender tu idea a inversores o clientes",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q3_react_M_a"
+        },
+        {
+          "id": "b",
+          "text": "El logo de la marca",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_M_b"
+        },
+        {
+          "id": "c",
+          "text": "El primer cliente que compra el producto",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_M_c"
+        },
+        {
+          "id": "d",
+          "text": "Un tipo de préstamo bancario",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_M_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q3_react_M_a",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_react_M_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_react_M_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_react_M_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_ask_W",
+      "speaker": "bot",
+      "text": "En el contexto de un emprendimiento, ¿qué es un 'pitch'?",
+      "next": "emp_q3_W"
+    },
+    {
+      "id": "emp_q3_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Una presentación breve para vender tu idea a inversores o clientes",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q3_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "El logo de la marca",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "El primer cliente que compra el producto",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "Un tipo de préstamo bancario",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q3_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q3_react_W_a",
+      "speaker": "bot",
+      "text": "Exacto. No estás tan perdida después de todo.",
+      "next": "emp_q4_ask_M"
+    },
+    {
+      "id": "emp_q3_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q4_ask_W"
+    },
+    {
+      "id": "emp_q3_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q4_ask_W"
+    },
+    {
+      "id": "emp_q3_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. Ya van varias mal. En serio, ¿tienes un negocio o lo estás inventando todo?",
+      "next": "emp_q4_ask_W"
+    },
+    {
+      "id": "emp_q4_ask_C",
+      "speaker": "bot",
+      "text": "¿Qué significa 'hacer bootstrapping' en un negocio?",
+      "next": "emp_q4_C"
+    },
+    {
+      "id": "emp_q4_C",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Financiarlo con recursos propios, sin inversión externa",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q4_react_C_a"
+        },
+        {
+          "id": "b",
+          "text": "Copiar el modelo de otro negocio exitoso",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_C_b"
+        },
+        {
+          "id": "c",
+          "text": "Contratar empleados sin pagarles al inicio",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_C_c"
+        },
+        {
+          "id": "d",
+          "text": "Registrar la marca legalmente",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_C_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q4_react_C_a",
+      "speaker": "bot",
+      "text": "¡Exacto! Contestaste todo bien, no lo puedo creer.",
+      "next": "c2_011d"
+    },
+    {
+      "id": "emp_q4_react_C_b",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que tenga un negocio propio.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_react_C_c",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que tenga un negocio propio.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_react_C_d",
+      "speaker": "bot",
+      "text": "No es esa. Primera que fallas, nada grave. Aunque esto lo sabe cualquiera que tenga un negocio propio.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_ask_M",
+      "speaker": "bot",
+      "text": "¿Qué significa 'hacer bootstrapping' en un negocio?",
+      "next": "emp_q4_M"
+    },
+    {
+      "id": "emp_q4_M",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Financiarlo con recursos propios, sin inversión externa",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q4_react_M_a"
+        },
+        {
+          "id": "b",
+          "text": "Copiar el modelo de otro negocio exitoso",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_M_b"
+        },
+        {
+          "id": "c",
+          "text": "Contratar empleados sin pagarles al inicio",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_M_c"
+        },
+        {
+          "id": "d",
+          "text": "Registrar la marca legalmente",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_M_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q4_react_M_a",
+      "speaker": "bot",
+      "text": "Bien esa, al menos una te salvó.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_react_M_b",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_react_M_c",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_react_M_d",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_ask_W",
+      "speaker": "bot",
+      "text": "¿Qué significa 'hacer bootstrapping' en un negocio?",
+      "next": "emp_q4_W"
+    },
+    {
+      "id": "emp_q4_W",
+      "speaker": "player_choice",
+      "prompt": "¿Qué respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Financiarlo con recursos propios, sin inversión externa",
+          "effect": {
+            "affection": 1
+          },
+          "next": "emp_q4_react_W_a"
+        },
+        {
+          "id": "b",
+          "text": "Copiar el modelo de otro negocio exitoso",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_W_b"
+        },
+        {
+          "id": "c",
+          "text": "Contratar empleados sin pagarles al inicio",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_W_c"
+        },
+        {
+          "id": "d",
+          "text": "Registrar la marca legalmente",
+          "effect": {
+            "affection": -1
+          },
+          "next": "emp_q4_react_W_d"
+        }
+      ]
+    },
+    {
+      "id": "emp_q4_react_W_a",
+      "speaker": "bot",
+      "text": "Bien esa, al menos una te salvó.",
+      "next": "quiz_result_partial"
+    },
+    {
+      "id": "emp_q4_react_W_b",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "emp_q4_react_W_c",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "emp_q4_react_W_d",
+      "speaker": "bot",
+      "text": "No, tampoco. A este punto ya perdí la cuenta de cuántas llevas mal. Esto se está poniendo gracioso.",
+      "next": "quiz_result_none"
+    },
+    {
+      "id": "quiz_result_partial",
+      "speaker": "bot",
+      "text": "Bueno, no está mal, apruebas raspando. Igual no me voy a guardar las bromas por eso, ¿eh?",
+      "next": "quiz_defense_choice"
+    },
+    {
+      "id": "quiz_result_none",
+      "speaker": "bot",
+      "text": "Te iba a felicitar, pero mejor no. ¿Te acuerdas cuando te pasaba la tarea para que la hicieras? Por lo visto ahora te tocaría a ti pasármela a mí.",
+      "next": "quiz_defense_choice"
+    },
+    {
+      "id": "quiz_defense_choice",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo te defiendes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Eso no es exactamente mi especialización, ¿sabes?",
+          "effect": {
+            "affection": 2
+          },
+          "next": "quiz_defense_reply_a"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, tampoco es que tú serías mejor en esto.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "quiz_defense_reply_b"
+        },
+        {
+          "id": "c",
+          "text": "Está bien, me lo merezco, jaja.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "quiz_defense_reply_c"
+        }
+      ]
+    },
+    {
+      "id": "quiz_defense_reply_a",
+      "speaker": "bot",
+      "text": "Válido, válido. Igual quedó registrado para la posteridad, no te voy a dejar olvidarlo tan fácil.",
+      "next": "quiz_defense_choice_a2"
+    },
+    {
+      "id": "quiz_defense_reply_b",
+      "speaker": "bot",
+      "text": "Tienes razón, probablemente yo reprobaría espectacularmente. Pero al menos yo no presumo de saberlo todo.",
+      "next": "quiz_defense_choice_b2"
+    },
+    {
+      "id": "quiz_defense_choice_a2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ya vas a ver cuando te pregunte algo de tu área. Ahí vamos a ver quién se ríe.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "quiz_defense_final_a"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, anótalo si quieres, no me importa demasiado.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "quiz_defense_final_a"
+        }
+      ]
+    },
+    {
+      "id": "quiz_defense_final_a",
+      "speaker": "bot",
+      "text": "Trato hecho. El día que hable de algo de lo mío, ahí vemos quién se está riendo de quién.",
+      "next": "c2_012"
+    },
+    {
+      "id": "quiz_defense_choice_b2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Yo tampoco presumo, simplemente lo estudié, algo que tú nunca hiciste.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "quiz_defense_final_b"
+        },
+        {
+          "id": "b",
+          "text": "Touché. Empate técnico, entonces.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "quiz_defense_final_b"
+        }
+      ]
+    },
+    {
+      "id": "quiz_defense_final_b",
+      "speaker": "bot",
+      "text": "Empate técnico, aceptado. Aunque en el fondo los dos sabemos que iba ganando yo.",
+      "next": "c2_012"
+    },
+    {
+      "id": "quiz_defense_reply_c",
+      "speaker": "bot",
+      "text": "Al menos te lo tomas con humor, eso lo valoro. No cualquiera aguanta que la interrogue así.",
+      "next": "c2_012"
+    },
+    {
+      "id": "c2_011a",
+      "speaker": "bot",
+      "text": "Vaya, contestaste absolutamente todo bien. Tenía mis dudas, lo reconozco, pero ahora sí: sabía que ibas a lograr algo grande, siempre tuviste esa cabeza para estudiar. Felicitaciones, en serio.",
+      "next": "c2_012"
+    },
+    {
+      "id": "c2_011b",
+      "speaker": "bot",
+      "text": "Bueno, todos empezamos así. Ya vas a encontrar tu camino, no hay apuro. Me alegra que sigas construyendo algo.",
+      "next": "c2_012"
+    },
+    {
+      "id": "c2_011c",
+      "speaker": "bot",
+      "text": "Contestaste todo perfecto, no puedo creerlo. En serio, qué lindo. Siempre pensé que serías buena enseñando, tenías mucha paciencia con todos nosotros en el grupo.",
+      "next": "c2_012"
+    },
+    {
+      "id": "c2_011d",
+      "speaker": "bot",
+      "text": "Un emprendimiento propio, nada menos, y encima sabes de lo que hablas. Eso requiere mucho valor, te felicito de verdad. ¿Y cómo te está yendo?",
+      "next": "c2_011d_2"
+    },
+    {
+      "id": "c2_011d_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Va bien, de a poco, pero avanzando.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c2_012"
+        },
+        {
+          "id": "b",
+          "text": "Prefiero no entrar en detalles, pero va bien.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c2_012"
+        }
+      ]
+    },
+    {
+      "id": "c2_011e",
+      "speaker": "bot",
+      "text": "Está bien, no hay problema. Cuando quieras contarme, ahí voy a estar.",
+      "next": "c2_012"
+    },
+    {
+      "id": "c2_012",
+      "speaker": "bot",
+      "text": "Oye, cambiando un poco de tema... ¿hay alguien especial en tu vida ahora? Pregunto sin mala intención, solo por curiosidad.",
+      "next": "c2_013"
+    },
+    {
+      "id": "c2_013",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes sobre tu vida sentimental?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "No, estoy soltera hace un tiempo.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c2_014a",
+          "flag": "confirmoSoltera"
+        },
+        {
+          "id": "b",
+          "text": "Sí, estoy en una relación.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c2_014b",
+          "flag": "confirmoEnPareja"
+        },
+        {
+          "id": "c",
+          "text": "Prefiero no hablar de eso ahora.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "c2_014c",
+          "flag": "noRespondioEstadoSentimental"
+        },
+        {
+          "id": "d",
+          "text": "¿Por qué la pregunta? ¿Y tú, cómo estás en ese tema?",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c2_014d",
+          "flag": "leDioVueltaLaPregunta"
+        }
+      ]
+    },
+    {
+      "id": "c2_014a",
+      "speaker": "bot",
+      "text": "Ah, mira. Bueno, su pérdida, supongo. La verdad no entiendo cómo nadie te retuvo.",
+      "next": "c2_015"
+    },
+    {
+      "id": "c2_014b",
+      "speaker": "bot",
+      "text": "Ah, bueno. Me alegro por ti, en serio.",
+      "next": "c2_015"
+    },
+    {
+      "id": "c2_014c",
+      "speaker": "bot",
+      "text": "Está bien, no hay problema, no tienes que contarme nada que no quieras.",
+      "next": "c2_015"
+    },
+    {
+      "id": "c2_014d",
+      "speaker": "bot",
+      "text": "Jaja, buena pregunta. Yo tampoco tengo a nadie ahora mismo. Curioso cómo se dieron las cosas, ¿no?",
+      "next": "c2_014d_2"
+    },
+    {
+      "id": "c2_014d_2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Sí, la verdad, un poco curioso sí.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c2_015"
+        },
+        {
+          "id": "b",
+          "text": "No leas tanto en eso, fue solo una pregunta.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c2_015"
+        }
+      ]
+    },
+    {
+      "id": "c2_015",
+      "speaker": "bot",
+      "text": "¿Recuerdas que vinimos todos a esta casa un par de veces, hace mil años? Era un caos total, pero fue lindo.",
+      "next": "c2_016"
+    },
+    {
+      "id": "c2_016",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes al recuerdo?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Sí, me acuerdo perfecto. Fue una época increíble.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c2_017a",
+          "flag": "recordoLaCasa"
+        },
+        {
+          "id": "b",
+          "text": "Vagamente, la verdad no recuerdo muchos detalles.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c2_017b"
+        },
+        {
+          "id": "c",
+          "text": "Prefiero no repasar tantos recuerdos por hoy.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c2_017c"
+        }
+      ]
+    },
+    {
+      "id": "c2_017a",
+      "speaker": "bot",
+      "text": "¿Ves? Sabía que te acordabas. Esta casa tiene más historias nuestras de las que pensaba, la verdad.",
+      "next": "c2_018"
+    },
+    {
+      "id": "c2_017b",
+      "speaker": "bot",
+      "text": "Bueno, no te preocupes, con el tiempo todo se difumina un poco. Igual fue una época linda, te lo aseguro.",
+      "next": "c2_018"
+    },
+    {
+      "id": "c2_017c",
+      "speaker": "bot",
+      "text": "Entiendo, no te voy a insistir con eso entonces. Sigamos con lo que importa ahora.",
+      "next": "c2_018"
+    },
+    {
+      "id": "c2_018",
+      "speaker": "bot",
+      "text": "No te quiero aburrir más con nostalgia. Lo importante es que ahora estoy aquí, solo, con una casa gigante para arreglar y sin mucha idea de por dónde empezar.",
+      "next": "c2_019"
+    },
+    {
+      "id": "c2_019",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo cierras esta parte de la charla?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Seguro te las arreglas, siempre fuiste bueno improvisando.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "BLOCK_2_END"
+        },
+        {
+          "id": "b",
+          "text": "¿Y no pensaste en pedirle ayuda a alguien?",
+          "effect": {
+            "affection": 5
+          },
+          "next": "BLOCK_2_END"
+        },
+        {
+          "id": "c",
+          "text": "Bueno, suerte con eso entonces.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "BLOCK_2_END"
+        }
+      ]
+    },
+    {
+      "id": "BLOCK_2_END",
+      "speaker": "system",
+      "note": "Fin del bloque 2. El bloque 3 (cierre del capítulo) continúa desde acá: dependiendo del valor final de 'affection' y de si en c2_019 la jugadora abrió la puerta a 'pedir ayuda', el bot puede tomar la iniciativa de invitarla a la casa el fin de semana (final bueno), despedirse con disculpas (final malo), o, si el valor es muy bajo, derivar en una discusión con reproches del pasado (final peor). La variable 'affection' y todas las flags acumuladas en los bloques 1 y 2 pasan como estado inicial del bloque 3."
+    }
+  ]
+}

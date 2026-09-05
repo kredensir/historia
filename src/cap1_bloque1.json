@@ -14,7 +14,18 @@
     },
     "flags": {
       "description": "Banderas booleanas que se activan con ciertas elecciones y pueden usarse más adelante en el capítulo para callbacks (ej: si mencionó a 'Fede', el bot puede sacarlo a relucir en el bloque 3).",
-      "list": ["mencionoAFede", "confirmoInteres", "negoInteresDeVerdad", "seOfendioPorInsinuacion", "sintioCelosPorBruno", "preguntoQueIbaADecir"]
+      "list": [
+        "mencionoAFede",
+        "confirmoInteres",
+        "negoInteresDeVerdad",
+        "seOfendioPorInsinuacion",
+        "sintioCelosPorBruno",
+        "preguntoQueIbaADecir",
+        "senaloElCambio",
+        "adivinoArtistaCorrecto",
+        "prefirioMusicaPropia",
+        "preguntoSiEraDedicada"
+      ]
     }
   },
   "thresholds_reference": {
@@ -41,9 +52,30 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "Jamás te borraría, tonto. Te tengo guardado como 'no contestar' desde 2019 😏", "effect": { "affection": 5 }, "next": "c1_004a" },
-        { "id": "b", "text": "Casi te borro varias veces, la verdad.", "effect": { "affection": -5 }, "next": "c1_004b" },
-        { "id": "c", "text": "Sí, te tengo. ¿Qué necesitas?", "effect": { "affection": -2 }, "next": "c1_004c" }
+        {
+          "id": "a",
+          "text": "Jamás te borraría, tonto. Te tengo guardado como 'no contestar' desde 2021 😏",
+          "effect": {
+            "affection": 5
+          },
+          "next": "c1_004a"
+        },
+        {
+          "id": "b",
+          "text": "Casi te borro varias veces, la verdad.",
+          "effect": {
+            "affection": -5
+          },
+          "next": "c1_004b"
+        },
+        {
+          "id": "c",
+          "text": "Sí, te tengo. ¿Qué necesitas?",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_004c"
+        }
       ]
     },
     {
@@ -69,8 +101,22 @@
       "speaker": "player_choice",
       "prompt": "El bot se puso serio de golpe. ¿Qué haces?",
       "choices": [
-        { "id": "a", "text": "No te lo dije para lastimarte, fue en broma.", "effect": { "affection": 4 }, "next": "c1_005" },
-        { "id": "b", "text": "Es en serio. Tienes que ganarte que te conteste de nuevo.", "effect": { "affection": -3 }, "next": "c1_005" }
+        {
+          "id": "a",
+          "text": "No te lo dije para lastimarte, fue en broma.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_005"
+        },
+        {
+          "id": "b",
+          "text": "Es en serio. Tienes que ganarte que te conteste de nuevo.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_005"
+        }
       ]
     },
     {
@@ -90,9 +136,30 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "Como tres años, más o menos. Desde que dejamos de vernos con el grupo.", "effect": { "affection": 3 }, "next": "c1_007a" },
-        { "id": "b", "text": "No sé, no llevo la cuenta.", "effect": { "affection": -3 }, "next": "c1_007b" },
-        { "id": "c", "text": "Desde que tú decidiste desaparecer, para ser exactos.", "effect": { "affection": -6 }, "next": "c1_007c" }
+        {
+          "id": "a",
+          "text": "Como tres años, más o menos. Desde que dejamos de vernos con el grupo.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_007a"
+        },
+        {
+          "id": "b",
+          "text": "No sé, no llevo la cuenta.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_007b"
+        },
+        {
+          "id": "c",
+          "text": "Desde que tú decidiste desaparecer, para ser exactos.",
+          "effect": {
+            "affection": -6
+          },
+          "next": "c1_007c"
+        }
       ]
     },
     {
@@ -104,7 +171,7 @@
     {
       "id": "c1_007b",
       "speaker": "bot",
-      "text": "Ja, yo tampoco. Prefiero no hacer cuentas, capaz me deprimo un poco.",
+      "text": "Ja, yo tampoco. Prefiero no hacer cuentas, tal vez me deprimo un poco.",
       "next": "c1_008"
     },
     {
@@ -118,8 +185,22 @@
       "speaker": "player_choice",
       "prompt": "Se hizo un silencio incómodo en la conversación. ¿Qué haces?",
       "choices": [
-        { "id": "a", "text": "No te lo dije para pelear, solo constatar un hecho.", "effect": { "affection": 2 }, "next": "c1_008" },
-        { "id": "b", "text": "Bueno, ¿y? ¿Vas a explicarme algo o no?", "effect": { "affection": -2 }, "next": "c1_008" }
+        {
+          "id": "a",
+          "text": "No te lo dije para pelear, solo constatar un hecho.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_008"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, ¿y? ¿Vas a explicarme algo o no?",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_008"
+        }
       ]
     },
     {
@@ -133,9 +214,30 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "¡No fue mi culpa! Tú pusiste demasiado alcohol en la parrilla, pirómano.", "effect": { "affection": 6 }, "next": "c1_010a" },
-        { "id": "b", "text": "Me acuerdo que después nadie me dejó cocinar nunca más.", "effect": { "affection": 4 }, "next": "c1_010b" },
-        { "id": "c", "text": "Prefiero no acordarme de esa época, la verdad.", "effect": { "affection": -4 }, "next": "c1_010c" }
+        {
+          "id": "a",
+          "text": "¡No fue mi culpa! Tú pusiste demasiado alcohol en la parrilla, pirómano.",
+          "effect": {
+            "affection": 6
+          },
+          "next": "c1_010a"
+        },
+        {
+          "id": "b",
+          "text": "Me acuerdo que después nadie me dejó cocinar nunca más.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_010b"
+        },
+        {
+          "id": "c",
+          "text": "Prefiero no acordarme de esa época, la verdad.",
+          "effect": {
+            "affection": -4
+          },
+          "next": "c1_010c"
+        }
       ]
     },
     {
@@ -161,8 +263,22 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo sigues?",
       "choices": [
-        { "id": "a", "text": "No es que me moleste, es que hay recuerdos ahí que prefiero dejar quietos.", "effect": { "affection": 1 }, "next": "c1_010_common" },
-        { "id": "b", "text": "Cambiemos de tema, ¿quieres?", "effect": { "affection": -1 }, "next": "c1_011" }
+        {
+          "id": "a",
+          "text": "No es que me moleste, es que hay recuerdos ahí que prefiero dejar quietos.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_010_common"
+        },
+        {
+          "id": "b",
+          "text": "Cambiemos de tema, ¿quieres?",
+          "effect": {
+            "affection": -1
+          },
+          "next": "c1_011"
+        }
       ]
     },
     {
@@ -176,9 +292,30 @@
       "speaker": "player_choice",
       "prompt": "¿Qué le respondes?",
       "choices": [
-        { "id": "a", "text": "¿Qué cosa?", "effect": { "affection": 0 }, "next": "c1_010x_open" },
-        { "id": "b", "text": "Seguro extrañaste comer gratis en todos los asados.", "effect": { "affection": 3 }, "next": "c1_010x_joke" },
-        { "id": "c", "text": "No sé, dime tú.", "effect": { "affection": 1 }, "next": "c1_010x_open" }
+        {
+          "id": "a",
+          "text": "¿Qué cosa?",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_010x_open"
+        },
+        {
+          "id": "b",
+          "text": "Seguro extrañaste comer gratis en todos los asados.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_010x_joke"
+        },
+        {
+          "id": "c",
+          "text": "No sé, dime tú.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_010x_open"
+        }
       ]
     },
     {
@@ -190,7 +327,7 @@
     {
       "id": "c1_010x_open",
       "speaker": "bot",
-      "text": "Extrañé sentir que había un lugar donde encajaba sin esforzarme. Con tú en particular, no sé, siempre fue fácil hablar de cualquier cosa.",
+      "text": "Extrañé sentir que había un lugar donde encajaba sin esforzarme. Contigo en particular, no sé, siempre fue fácil hablar de cualquier cosa.",
       "next": "c1_010x_reply"
     },
     {
@@ -198,9 +335,30 @@
       "speaker": "player_choice",
       "prompt": "Eso te movió algo por dentro. ¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "Sí... conmigo también era fácil. Todavía lo es, al parecer.", "effect": { "affection": 6 }, "next": "c1_011" },
-        { "id": "b", "text": "No te pongas sentimental tan rápido, recién arrancamos jaja.", "effect": { "affection": 3 }, "next": "c1_011" },
-        { "id": "c", "text": "No sé si estoy de acuerdo con eso, la verdad.", "effect": { "affection": -3 }, "next": "c1_011" }
+        {
+          "id": "a",
+          "text": "Sí... conmigo también era fácil. Todavía lo es, al parecer.",
+          "effect": {
+            "affection": 6
+          },
+          "next": "c1_011"
+        },
+        {
+          "id": "b",
+          "text": "No te pongas sentimental tan rápido, recién arrancamos jaja.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_011"
+        },
+        {
+          "id": "c",
+          "text": "No sé si estoy de acuerdo con eso, la verdad.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_011"
+        }
       ]
     },
     {
@@ -216,9 +374,31 @@
       "speaker": "player_choice",
       "prompt": "Reaccionas a la foto",
       "choices": [
-        { "id": "a", "text": "Ay no, mira cómo estábamos vestidos, qué vergüenza jajaja", "effect": { "affection": 5 }, "next": "c1_013a" },
-        { "id": "b", "text": "Yo ahí estaba enamoradísima de alguien de esa foto, qué momentos.", "effect": { "affection": 8 }, "next": "c1_013b_intro", "tag": "insinuacion_romantica" },
-        { "id": "c", "text": "Borrá esa foto, por favor.", "effect": { "affection": -5 }, "next": "c1_013c" }
+        {
+          "id": "a",
+          "text": "Ay no, mira cómo estábamos vestidos, qué vergüenza jajaja",
+          "effect": {
+            "affection": 5
+          },
+          "next": "c1_013a"
+        },
+        {
+          "id": "b",
+          "text": "Yo ahí estaba enamoradísima de alguien de esa foto, qué momentos.",
+          "effect": {
+            "affection": 8
+          },
+          "next": "c1_013b_intro",
+          "tag": "insinuacion_romantica"
+        },
+        {
+          "id": "c",
+          "text": "Borrá esa foto, por favor.",
+          "effect": {
+            "affection": -5
+          },
+          "next": "c1_013c"
+        }
       ]
     },
     {
@@ -244,8 +424,22 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo sigues?",
       "choices": [
-        { "id": "a", "text": "Está bien, no pasa nada, solo avísame antes la próxima.", "effect": { "affection": 2 }, "next": "c1_014_lead" },
-        { "id": "b", "text": "Gracias por entender.", "effect": { "affection": 1 }, "next": "c1_014_lead" }
+        {
+          "id": "a",
+          "text": "Está bien, no pasa nada, solo avísame antes la próxima.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_014_lead"
+        },
+        {
+          "id": "b",
+          "text": "Gracias por entender.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_014_lead"
+        }
       ]
     },
     {
@@ -259,10 +453,40 @@
       "speaker": "player_choice",
       "prompt": "El bot está tanteando si hablabas de él. ¿Qué haces?",
       "choices": [
-        { "id": "a", "text": "Yo no dije que fueras tú, no te ilusiones tanto.", "effect": { "affection": 4 }, "next": "c1_013b_playful" },
-        { "id": "b", "text": "No, en realidad me gustaba Fede en esa época.", "effect": { "affection": -2 }, "next": "c1_013b_fede", "flag": "mencionoAFede" },
-        { "id": "c", "text": "¿Por qué asumes que hablo de tú? Qué ego tienes.", "effect": { "affection": -5 }, "next": "c1_013b_offended", "flag": "seOfendioPorInsinuacion" },
-        { "id": "d", "text": "Eso quedará en el misterio 😏", "effect": { "affection": 7 }, "next": "c1_013b_mystery" }
+        {
+          "id": "a",
+          "text": "Yo no dije que fueras tú, no te ilusiones tanto.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_013b_playful"
+        },
+        {
+          "id": "b",
+          "text": "No, en realidad me gustaba Fede en esa época.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_013b_fede",
+          "flag": "mencionoAFede"
+        },
+        {
+          "id": "c",
+          "text": "¿Por qué asumes que hablo de ti? Qué ego tienes.",
+          "effect": {
+            "affection": -5
+          },
+          "next": "c1_013b_offended",
+          "flag": "seOfendioPorInsinuacion"
+        },
+        {
+          "id": "d",
+          "text": "Eso quedará en el misterio 😏",
+          "effect": {
+            "affection": 7
+          },
+          "next": "c1_013b_mystery"
+        }
       ]
     },
     {
@@ -276,15 +500,36 @@
       "speaker": "player_choice",
       "prompt": "¿Le sigues el juego?",
       "choices": [
-        { "id": "a", "text": "Era Nico, el del bajo. Tenía algo, no sé.", "effect": { "affection": 1 }, "next": "c1_013b_playful_nico" },
-        { "id": "b", "text": "No te voy a decir nada, quédate con las ganas.", "effect": { "affection": 5 }, "next": "c1_013b_playful_secreto" },
-        { "id": "c", "text": "¿Y tú? ¿Alguien de la foto te gustaba a tú?", "effect": { "affection": 6 }, "next": "c1_013b_turntables" }
+        {
+          "id": "a",
+          "text": "Era Nico, el del bajo. Tenía algo, no sé.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_013b_playful_nico"
+        },
+        {
+          "id": "b",
+          "text": "No te voy a decir nada, quédate con las ganas.",
+          "effect": {
+            "affection": 5
+          },
+          "next": "c1_013b_playful_secreto"
+        },
+        {
+          "id": "c",
+          "text": "¿Y tú? ¿Alguien de la foto te gustaba a ti?",
+          "effect": {
+            "affection": 6
+          },
+          "next": "c1_013b_turntables"
+        }
       ]
     },
     {
       "id": "c1_013b_playful_nico",
       "speaker": "bot",
-      "text": "¿Nico? Jajaja, no me lo esperaba. Bueno, mira tú, todo este tiempo pensando que sabía todo del grupo y resulta que no sabía nada.",
+      "text": "¿Nico? Jajaja, no me lo esperaba. Bueno, mira nada más, todo este tiempo pensando que sabía todo del grupo y resulta que no sabía nada.",
       "next": "c1_014_lead"
     },
     {
@@ -304,8 +549,22 @@
       "speaker": "player_choice",
       "prompt": "Quedó picando la duda. ¿Qué haces?",
       "choices": [
-        { "id": "a", "text": "Uy dale, no seas así, cuéntame.", "effect": { "affection": 3 }, "next": "c1_013b_turntables_push" },
-        { "id": "b", "text": "Bueno, guárdatelo entonces, misterioso.", "effect": { "affection": 4 }, "next": "c1_014_lead" }
+        {
+          "id": "a",
+          "text": "Ay, vamos, no seas así, cuéntame.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_013b_turntables_push"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, guárdatelo entonces, misterioso.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_014_lead"
+        }
       ]
     },
     {
@@ -325,8 +584,22 @@
       "speaker": "player_choice",
       "prompt": "El bot suena raro, más cortante de lo normal. ¿Cómo sigues?",
       "choices": [
-        { "id": "a", "text": "Es broma, no me gustaba nadie en particular jajaja.", "effect": { "affection": 4 }, "next": "c1_013b_fede_broma" },
-        { "id": "b", "text": "Es en serio. ¿Por qué te sorprende tanto?", "effect": { "affection": -4 }, "next": "c1_013b_fede_serio" }
+        {
+          "id": "a",
+          "text": "Es broma, no me gustaba nadie en particular jajaja.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_013b_fede_broma"
+        },
+        {
+          "id": "b",
+          "text": "Es en serio. ¿Por qué te sorprende tanto?",
+          "effect": {
+            "affection": -4
+          },
+          "next": "c1_013b_fede_serio"
+        }
       ]
     },
     {
@@ -346,8 +619,23 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "Fue hace mucho, ni sé por qué lo mencioné.", "effect": { "affection": 1 }, "next": "c1_014_lead" },
-        { "id": "b", "text": "¿Celoso, tal vez?", "effect": { "affection": 2 }, "next": "c1_013b_fede_celos", "flag": "negoInteresDeVerdad" }
+        {
+          "id": "a",
+          "text": "Fue hace mucho, ni sé por qué lo mencioné.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_014_lead"
+        },
+        {
+          "id": "b",
+          "text": "¿Celoso, tal vez?",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_013b_fede_celos",
+          "flag": "negoInteresDeVerdad"
+        }
       ]
     },
     {
@@ -367,8 +655,22 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo sigues?",
       "choices": [
-        { "id": "a", "text": "Tranquilo, tampoco fue para tanto, perdón por saltar así.", "effect": { "affection": 3 }, "next": "c1_014_lead" },
-        { "id": "b", "text": "Está bien, pero cuidado con las suposiciones.", "effect": { "affection": 0 }, "next": "c1_014_lead" }
+        {
+          "id": "a",
+          "text": "Tranquilo, tampoco fue para tanto, perdón por saltar así.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_014_lead"
+        },
+        {
+          "id": "b",
+          "text": "Está bien, pero cuidado con las suposiciones.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_014_lead"
+        }
       ]
     },
     {
@@ -388,8 +690,22 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "Con un par sí, de vez en cuando nos juntamos y hablamos de tú, obvio.", "effect": { "affection": 4 }, "next": "c1_015a" },
-        { "id": "b", "text": "No, la verdad me alejé de todos después de lo que pasó.", "effect": { "affection": -3 }, "next": "c1_015b" }
+        {
+          "id": "a",
+          "text": "Con un par sí, de vez en cuando nos juntamos y hablamos de ti, obvio.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_015a"
+        },
+        {
+          "id": "b",
+          "text": "No, la verdad me alejé de todos después de lo que pasó.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_015b"
+        }
       ]
     },
     {
@@ -421,9 +737,31 @@
       "speaker": "player_choice",
       "prompt": "El nombre de Bruno te genera una sensación rara. ¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "No, nada. Qué raro eso, la verdad me preocupa un poco.", "effect": { "affection": 3 }, "next": "c1_016a" },
-        { "id": "b", "text": "Ni idea, y honestamente no me interesa mucho saber.", "effect": { "affection": -2 }, "next": "c1_016b" },
-        { "id": "c", "text": "¿Por qué preguntas justo por él?", "effect": { "affection": 1 }, "next": "c1_016c", "flag": "sintioCelosPorBruno" }
+        {
+          "id": "a",
+          "text": "No, nada. Qué raro eso, la verdad me preocupa un poco.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_016a"
+        },
+        {
+          "id": "b",
+          "text": "Ni idea, y honestamente no me interesa mucho saber.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_016b"
+        },
+        {
+          "id": "c",
+          "text": "¿Por qué preguntas justo por él?",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_016c",
+          "flag": "sintioCelosPorBruno"
+        }
       ]
     },
     {
@@ -455,9 +793,30 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo respondes?",
       "choices": [
-        { "id": "a", "text": "Sinceramente yo tampoco estaba segura, pero me hizo bien saber de tú.", "effect": { "affection": 7 }, "next": "c1_019a" },
-        { "id": "b", "text": "No sé todavía si hice bien en contestar.", "effect": { "affection": -2 }, "next": "c1_019b" },
-        { "id": "c", "text": "Fue por curiosidad, nada más.", "effect": { "affection": -4 }, "next": "c1_019c" }
+        {
+          "id": "a",
+          "text": "Sinceramente yo tampoco estaba segura, pero me hizo bien saber de ti.",
+          "effect": {
+            "affection": 7
+          },
+          "next": "c1_019a"
+        },
+        {
+          "id": "b",
+          "text": "No sé todavía si hice bien en contestar.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_019b"
+        },
+        {
+          "id": "c",
+          "text": "Fue por curiosidad, nada más.",
+          "effect": {
+            "affection": -4
+          },
+          "next": "c1_019c"
+        }
       ]
     },
     {
@@ -489,14 +848,611 @@
       "speaker": "player_choice",
       "prompt": "¿Cómo sigues?",
       "choices": [
-        { "id": "a", "text": "No dudo de que esté bien, dudo de mí, es distinto.", "effect": { "affection": 3 }, "next": "c1_020_gate" },
-        { "id": "b", "text": "Bueno, ya que estamos, terminemos la conversación al menos.", "effect": { "affection": 0 }, "next": "c1_020_gate" }
+        {
+          "id": "a",
+          "text": "No dudo de que esté bien, dudo de mí, es distinto.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_019b_3"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, ya que estamos, terminemos la conversación al menos.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_019b_3"
+        }
       ]
+    },
+    {
+      "id": "c1_019b_3",
+      "speaker": "bot",
+      "text": "De cualquier forma, dudes o no, hay algo que te quería contar. No te escribí solo por nostalgia.",
+      "next": "c1_020_gate"
     },
     {
       "id": "c1_019c",
       "speaker": "bot",
-      "text": "Con curiosidad se empieza, no está mal. Capaz con el tiempo se convierte en otra cosa. O capaz no, y está bien también.",
+      "text": "Con curiosidad se empieza, no está mal. Tal vez con el tiempo se convierte en otra cosa. O tal vez no, y está bien también.",
+      "next": "c1_reax_choice"
+    },
+    {
+      "id": "c1_reax_choice",
+      "speaker": "player_choice",
+      "prompt": "Ese comentario te dejó pensando. ¿Cómo reaccionas?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Eso sonó bastante directo... no te recordaba así, la verdad. Has cambiado.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "c1_reax_apology",
+          "flag": "senaloElCambio"
+        },
+        {
+          "id": "b",
+          "text": "Jaja, veo que en algo no cambiaste: sigues siendo igual de directo.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_music_transition_light"
+        },
+        {
+          "id": "c",
+          "text": "Está bien, no hay problema. Sigue contándome.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_019c_2"
+        }
+      ]
+    },
+    {
+      "id": "c1_reax_apology",
+      "speaker": "bot",
+      "text": "Perdón, no fue mi intención sonar tan directo. A veces se me escapan las palabras más rápido de lo que pienso.",
+      "next": "c1_reax_apology_choice"
+    },
+    {
+      "id": "c1_reax_apology_choice",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes a la disculpa?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Está bien, no te preocupes. Solo me sorprendió, nada más.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_change_bot"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, eso también demuestra que has cambiado, y no necesariamente para bien.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_change_bot_harsh"
+        }
+      ]
+    },
+    {
+      "id": "c1_change_bot",
+      "speaker": "bot",
+      "text": "Supongo que las personas cambiamos con el tiempo, ¿no? No sé si siempre es para bien, pero cambiamos.",
+      "next": "c1_change_choice"
+    },
+    {
+      "id": "c1_change_bot_harsh",
+      "speaker": "bot",
+      "text": "Tal vez tengas razón. No todos los cambios son buenos, lo reconozco. Aunque no todo en mí cambió, para que lo sepas.",
+      "next": "c1_change_choice"
+    },
+    {
+      "id": "c1_change_choice",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues la conversación?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "No todo cambio es bueno, eso es cierto.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "c1_change_reply_a"
+        },
+        {
+          "id": "b",
+          "text": "Me gustaría saber qué más cambió en ti.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_change_reply_b"
+        }
+      ]
+    },
+    {
+      "id": "c1_change_reply_a",
+      "speaker": "bot",
+      "text": "Tienes razón, no siempre. Pero bueno, hay cosas que siguen exactamente igual también, para que te quedes tranquila.",
+      "next": "c1_music_intro"
+    },
+    {
+      "id": "c1_change_reply_b",
+      "speaker": "bot",
+      "text": "Esa pregunta abre una lista bastante larga. Pero te cuento algo que no cambió, para no asustarte de entrada.",
+      "next": "c1_music_intro"
+    },
+    {
+      "id": "c1_music_transition_light",
+      "speaker": "bot",
+      "text": "Igual, hay cosas que no cambiaron nunca. Por ejemplo esta.",
+      "next": "c1_music_intro"
+    },
+    {
+      "id": "c1_music_intro",
+      "speaker": "bot",
+      "text": "Sigo escuchando música todo el tiempo, eso no cambió para nada. Es más, apuesto a que ni te acuerdas qué me gustaba escuchar en esa época.",
+      "next": "c1_music_guess"
+    },
+    {
+      "id": "c1_music_guess",
+      "speaker": "player_choice",
+      "prompt": "Intentas recordar qué artista le gustaba",
+      "choices": [
+        {
+          "id": "a",
+          "text": "DJ Snake, ¿no? Siempre tenías algo de él sonando.",
+          "effect": {
+            "affection": 6
+          },
+          "next": "c1_music_correct",
+          "flag": "adivinoArtistaCorrecto"
+        },
+        {
+          "id": "b",
+          "text": "¿Bad Bunny? No, espera... ¿Coldplay?",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_music_wrong"
+        },
+        {
+          "id": "c",
+          "text": "La verdad no tengo idea, dime tú.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_music_reveal"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_correct",
+      "speaker": "bot",
+      "text": "¡Exacto! No puedo creer que te acuerdes de eso, con todo lo que ha pasado. DJ Snake, sí señor.",
+      "next": "c1_music_recommend"
+    },
+    {
+      "id": "c1_music_wrong",
+      "speaker": "bot",
+      "text": "No, no, para nada. Ni cerca, la verdad. Te doy una pista: es un DJ, produce y mezcla géneros distintos que combinan mejor de lo que parece.",
+      "next": "c1_music_wrong_choice"
+    },
+    {
+      "id": "c1_music_wrong_choice",
+      "speaker": "player_choice",
+      "prompt": "¿Última oportunidad de adivinar?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ah, ya sé, ¿DJ Snake?",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_music_correct"
+        },
+        {
+          "id": "b",
+          "text": "No se me ocurre nadie más, dime tú.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_music_reveal"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_reveal",
+      "speaker": "bot",
+      "text": "Era DJ Snake. Lo escuchaba todo el tiempo en esa época, ¿en serio no te acordabas?",
+      "next": "c1_music_recommend"
+    },
+    {
+      "id": "c1_music_recommend",
+      "speaker": "bot",
+      "text": "Te recomiendo dos canciones de él: 'SG', y sobre todo 'A Different Way'. Esa última me trae muchos recuerdos de esa época.",
+      "next": "c1_music_react"
+    },
+    {
+      "id": "c1_music_react",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo reaccionas a la recomendación?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "La verdad, ese estilo de música no me gusta mucho.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_music_defend_start"
+        },
+        {
+          "id": "b",
+          "text": "'A Different Way' me suena, creo que la escuché alguna vez.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_music_recognize"
+        },
+        {
+          "id": "c",
+          "text": "Prefiero mil veces otro tipo de música, sinceramente.",
+          "effect": {
+            "affection": -4
+          },
+          "next": "c1_music_defend_start"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_recognize",
+      "speaker": "bot",
+      "text": "¿Ves? Ahí quería llegar. No perdiste del todo el gusto que tenías antes, solo lo tienes un poco oxidado.",
+      "next": "c1_music_positive_choice"
+    },
+    {
+      "id": "c1_music_positive_choice",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues la charla?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Tal vez debería escucharlo más seguido, ahora que lo pienso.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_music_positive_a"
+        },
+        {
+          "id": "b",
+          "text": "No te acostumbres, fue solo una canción.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_music_positive_b"
+        },
+        {
+          "id": "c",
+          "text": "¿Y tú te acuerdas qué música me gustaba a mí en esa época?",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_music_positive_c"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_positive_a",
+      "speaker": "bot",
+      "text": "Ese es el espíritu. Escúchala un par de veces más y vas a terminar tarareándola sin darte cuenta.",
+      "next": "c1_music_positive_transition"
+    },
+    {
+      "id": "c1_music_positive_b",
+      "speaker": "bot",
+      "text": "Bien, bien, no me voy a hacer ilusiones. Aunque sea una sola canción, ya es más de lo que esperaba de ti.",
+      "next": "c1_music_positive_transition"
+    },
+    {
+      "id": "c1_music_positive_c",
+      "speaker": "bot",
+      "text": "Buena pregunta. Si mal no recuerdo, tenías fama de escuchar de todo un poco: The Weeknd, Taylor Swift, Rihanna... ¿sigue siendo así?",
+      "next": "c1_music_positive_c2"
+    },
+    {
+      "id": "c1_music_positive_c2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Sí, básicamente. No cambié en ese sentido.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_music_positive_transition"
+        },
+        {
+          "id": "b",
+          "text": "Algo cambió, ahora escucho un poco de todo.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_music_positive_transition"
+        },
+        {
+          "id": "c",
+          "text": "Cuidado con burlarte, que tus gustos tampoco son perfectos.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_music_positive_transition"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_positive_transition",
+      "speaker": "bot",
+      "text": "Bueno, ya que estamos hablando de música, tengo una última recomendación. Esta sí es innegociable.",
+      "next": "c1_music_link_send"
+    },
+    {
+      "id": "c1_music_defend_start",
+      "speaker": "bot",
+      "text": "¿Cómo que no te gusta? No puedes cuestionar mis gustos musicales tan rápido.",
+      "next": "c1_music_defend_1"
+    },
+    {
+      "id": "c1_music_defend_1",
+      "speaker": "bot",
+      "text": "Además, tú no tienes mucha autoridad para opinar. A ti te gusta música bastante genérica, del tipo The Weeknd, Taylor Swift, Rihanna...",
+      "next": "c1_music_ego_choice1"
+    },
+    {
+      "id": "c1_music_ego_choice1",
+      "speaker": "player_choice",
+      "prompt": "El bot cuestionó tus gustos musicales. ¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "¿Genérica? The Weeknd es un artista increíble, no permito que hables así de él.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_music_ego_weeknd"
+        },
+        {
+          "id": "b",
+          "text": "Al menos mis artistas llenan estadios, no sé qué me vas a decir de DJ Snake.",
+          "effect": {
+            "affection": -5
+          },
+          "next": "c1_music_ego_attack"
+        },
+        {
+          "id": "c",
+          "text": "Bueno, tienes razón, tal vez no tengo tan buen oído.",
+          "effect": {
+            "affection": 5
+          },
+          "next": "c1_music_ego_concede"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_ego_weeknd",
+      "speaker": "bot",
+      "text": "Está bien, está bien, The Weeknd tiene un par de temas buenos, lo reconozco. Pero Taylor Swift... eso ya es otro nivel de genérico.",
+      "next": "c1_music_ego_choice2"
+    },
+    {
+      "id": "c1_music_ego_choice2",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues defendiendo tus gustos?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "No te atrevas a hablar mal de Taylor Swift, esa mujer es una genia.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c1_music_ego_taylor"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, en eso tal vez tienes algo de razón.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c1_music_ego_deescalate"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_ego_taylor",
+      "speaker": "bot",
+      "text": "Genia, genia... escribe canciones sobre los mismos temas desde hace años. Pero bueno, no voy a pelear por esto toda la noche.",
+      "next": "c1_music_ego_deescalate"
+    },
+    {
+      "id": "c1_music_ego_attack",
+      "speaker": "bot",
+      "text": "Eso es un golpe bajo y lo sabes. DJ Snake ha llenado escenarios más grandes de lo que te imaginas. Investiga antes de hablar.",
+      "next": "c1_music_ego_choice2b"
+    },
+    {
+      "id": "c1_music_ego_choice2b",
+      "speaker": "player_choice",
+      "prompt": "El tono subió un poco. ¿Cómo sigues?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ya, ya, no te pongas tan intenso, era broma.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_music_ego_deescalate"
+        },
+        {
+          "id": "b",
+          "text": "No estoy tan segura de eso, pero bueno, sigamos.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "c1_music_ego_deescalate"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_ego_concede",
+      "speaker": "bot",
+      "text": "Así me gusta, reconociendo la superioridad cuando corresponde. Vas aprendiendo.",
+      "next": "c1_music_ego_choice3"
+    },
+    {
+      "id": "c1_music_ego_deescalate",
+      "speaker": "bot",
+      "text": "Al final, cada uno tiene sus gustos, ¿no? Aunque, seamos sinceros, los míos son objetivamente mejores.",
+      "next": "c1_music_ego_choice3"
+    },
+    {
+      "id": "c1_music_ego_choice3",
+      "speaker": "player_choice",
+      "prompt": "¿Última palabra sobre el tema?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Está bien, envíame esas canciones y las escucho con mente abierta.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c1_music_link"
+        },
+        {
+          "id": "b",
+          "text": "No pienso escuchar nada de eso, prefiero seguir con lo mío.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_music_link_forced",
+          "flag": "prefirioMusicaPropia"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_link",
+      "speaker": "bot",
+      "text": "Así me gusta. Por ahora dejo de insistir con DJ Snake, aunque tengo una última recomendación. Esta sí es innegociable.",
+      "next": "c1_music_link_send"
+    },
+    {
+      "id": "c1_music_link_forced",
+      "speaker": "bot",
+      "text": "Vas a escuchar esta última de todas formas, no es negociable. Es la excepción a todo lo que acabas de decir.",
+      "next": "c1_music_link_send"
+    },
+    {
+      "id": "c1_music_link_send",
+      "speaker": "bot",
+      "text": "Mira este video: https://www.youtube.com/watch?v=dQw4w9WgXcQ . Primero míralo entero, lee bien la letra, y después seguimos hablando.",
+      "next": "c1_music_link_wait"
+    },
+    {
+      "id": "c1_music_link_wait",
+      "speaker": "player_choice",
+      "prompt": "¿Qué le respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Dame un momento, ya lo veo.",
+          "effect": {
+            "affection": 0
+          },
+          "next": "c1_music_link_waiting"
+        },
+        {
+          "id": "b",
+          "text": "Ya lo vi y leí la letra completa.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_music_link_confirm"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_link_waiting",
+      "speaker": "bot",
+      "text": "Tómate tu tiempo, no hay apuro. Avísame cuando termines.",
+      "next": "c1_music_link_wait2"
+    },
+    {
+      "id": "c1_music_link_wait2",
+      "speaker": "player_choice",
+      "prompt": "Cuando termines de verlo, respondes",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Listo, ya la vi completa y leí la letra.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c1_music_link_confirm"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_link_confirm",
+      "speaker": "bot",
+      "text": "¿Y bien? Dime la verdad: esa canción le gana a todo lo que mencionaste antes, ¿o no?",
+      "next": "c1_music_link_react"
+    },
+    {
+      "id": "c1_music_link_react",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Tengo que admitir que tiene algo especial... ¿la letra es dedicada a mí o qué?",
+          "effect": {
+            "affection": 6
+          },
+          "next": "c1_music_dedicated",
+          "flag": "preguntoSiEraDedicada"
+        },
+        {
+          "id": "b",
+          "text": "No está mal, pero no sé si le gana a todo lo mío.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c1_music_final"
+        },
+        {
+          "id": "c",
+          "text": "Sigo prefiriendo mis artistas, lo siento.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c1_music_final"
+        }
+      ]
+    },
+    {
+      "id": "c1_music_dedicated",
+      "speaker": "bot",
+      "text": "No te hagas ilusiones tan rápido... o tal vez sí, quién sabe. Eso te lo dejo para que lo pienses tú sola.",
+      "next": "c1_music_final"
+    },
+    {
+      "id": "c1_music_final",
+      "speaker": "bot",
+      "text": "Bueno, ya fue suficiente batalla musical por hoy. Aunque no me vas a convencer de que Taylor Swift le gana a DJ Snake, eso te lo aseguro.",
       "next": "c1_019c_2"
     },
     {
@@ -510,9 +1466,30 @@
       "speaker": "player_choice",
       "prompt": "¿Qué le respondes antes de que siga?",
       "choices": [
-        { "id": "a", "text": "¿Qué cosa? Ahora me preocupaste un poco.", "effect": { "affection": 2 }, "next": "BLOCK_1_END" },
-        { "id": "b", "text": "Cuéntame, te escucho.", "effect": { "affection": 3 }, "next": "BLOCK_1_END" },
-        { "id": "c", "text": "Uh, suena serio. Dime que no es nada grave.", "effect": { "affection": 1 }, "next": "BLOCK_1_END" }
+        {
+          "id": "a",
+          "text": "¿Qué cosa? Ahora me preocupaste un poco.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "BLOCK_1_END"
+        },
+        {
+          "id": "b",
+          "text": "Cuéntame, te escucho.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "BLOCK_1_END"
+        },
+        {
+          "id": "c",
+          "text": "Uh, suena serio. Dime que no es nada grave.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "BLOCK_1_END"
+        }
       ]
     },
     {
