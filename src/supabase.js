@@ -141,6 +141,27 @@ export async function finalizarSesion(sesionId, finalId) {
 }
 
 /**
+ * Guarda la calificación del capítulo + metadatos del dispositivo.
+ * @param {string} sesionId
+ * @param {Object} payload - { estrellas (1-5), device (objeto libre) }
+ */
+export async function guardarCalificacion(sesionId, payload) {
+  const { data, error } = await supabase
+    .from('sesiones_juego')
+    .update({
+      calificacion: payload.estrellas,
+      meta_jugador: payload.device || {},
+      fecha_actualizacion: new Date().toISOString()
+    })
+    .eq('id', sesionId)
+    .select('id')
+    .single()
+
+  if (error) throw error
+  return data
+}
+
+/**
  * Obtiene historial de sesiones de un usuario
  */
 export async function obtenerHistorial(usuarioNombre) {

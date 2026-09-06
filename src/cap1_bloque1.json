@@ -835,7 +835,13 @@
       "id": "c1_019a_3",
       "speaker": "bot",
       "text": "Hay algo que quiero contarte, en realidad. Por eso te escribí hoy, no fue solo nostalgia.",
-      "next": "c1_020_gate"
+      "next": "c1_019a_music"
+    },
+    {
+      "id": "c1_019a_music",
+      "speaker": "bot",
+      "text": "Pero antes de ponerme serio del todo... dejame comprobar una cosa. A ver si tu memoria sigue intacta después de tanto tiempo.",
+      "next": "c1_music_intro"
     },
     {
       "id": "c1_019b",
@@ -870,7 +876,13 @@
       "id": "c1_019b_3",
       "speaker": "bot",
       "text": "De cualquier forma, dudes o no, hay algo que te quería contar. No te escribí solo por nostalgia.",
-      "next": "c1_020_gate"
+      "next": "c1_019b_music"
+    },
+    {
+      "id": "c1_019b_music",
+      "speaker": "bot",
+      "text": "Pero ya que seguimos hablando y todavía no me cortaste... dejame hacerte una prueba rápida. A ver si te acordás de algo de esa época.",
+      "next": "c1_music_intro"
     },
     {
       "id": "c1_019c",

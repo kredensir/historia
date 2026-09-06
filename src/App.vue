@@ -1,6 +1,6 @@
 <script setup>
 import { ref, onMounted, watch, nextTick } from 'vue'
-import { guardarSesion, actualizarProgreso, actualizarUbicacion, finalizarSesion } from './supabase.js'
+import { guardarSesion, actualizarProgreso, actualizarUbicacion, finalizarSesion, guardarCalificacion } from './supabase.js'
 import bloque1 from './cap1_bloque1.json'
 import bloque2 from './capitulo1_bloque2.json'
 import bloque3 from './capitulo1_bloque3.json'
@@ -44,6 +44,12 @@ const mostrandoMenu = ref(false)
 const hayPartidaGuardada = ref(false)
 const estadoMsg = ref({})
 const introSaliendo = ref(false)
+// Estado del bot en el header (en línea → desconectado al final)
+const estadoBot = ref('en línea')
+// Overlay de fin de capítulo + calificación (0 = sin calificar)
+const mostrarFinal = ref(false)
+const calificacion = ref(0)
+const estrellaHover = ref(0)
 // Historial de elecciones del jugador (se persiste en Supabase)
 const elecciones = ref([])
 // Flags activadas por las elecciones (ej. occupation_medicina, confirmoSoltera)
@@ -143,7 +149,7 @@ function persistirProgreso() {
 
 // ===== LOCALSTORAGE =====
 function guardarCache() {
-  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ botSeleccionado: botSeleccionado.value, nombreUsuario: nombreUsuario.value, sesionId: sesionId.value, mensajes: mensajes.value, nodoActual: nodoActual.value, affection: affection.value, elecciones: elecciones.value, flags: flags.value, bloqueActual: bloqueActual.value, timestamp: Date.now() })); hayPartidaGuardada.value = true } catch (e) {}
+  try { localStorage.setItem(STORAGE_KEY, JSON.stringify({ botSeleccionado: botSeleccionado.value, nombreUsuario: nombreUsuario.value, sesionId: sesionId.value, mensajes: mensajes.value, nodoActual: nodoActual.value, affection: affection.value, elecciones: elecciones.value, flags: flags.value, bloqueActual: bloqueActual.value, calificacion: calificacion.value, timestamp: Date.now() })); hayPartidaGuardada.value = true } catch (e) {}
 }
 function cargarCache() { try { const g = localStorage.getItem(STORAGE_KEY); if (g) { const s = JSON.parse(g); if (s.botSeleccionado && s.nombreUsuario && s.mensajes?.length) return s } } catch (e) {} return null }
 function limpiarCache() { localStorage.removeItem(STORAGE_KEY); hayPartidaGuardada.value = false }
@@ -179,6 +185,10 @@ async function iniciarJuego() {
   pantalla.value = 'intro'
   mostrandoMenu.value = false
   introSaliendo.value = false
+  estadoBot.value = 'en línea'
+  mostrarFinal.value = false
+  calificacion.value = 0
+  estrellaHover.value = 0
   affection.value = AFFECTION_INICIAL
   elecciones.value = []
   flags.value = []
@@ -203,6 +213,8 @@ function nuevaPartida() {
   bloqueActual.value = bloques[0]?.meta?.blockId || 'bloque_desconocido'
   mostrandoOpciones.value = false; opcionesActuales.value = []
   sesionId.value = null; pantalla.value = 'chat'; escribiendo.value = false
+  estadoBot.value = 'en línea'; mostrarFinal.value = false
+  calificacion.value = 0; estrellaHover.value = 0
   cargarPrimerMensaje(); mostrandoMenu.value = false
 }
 
@@ -281,11 +293,59 @@ function alCerrarBloque(nodo) {
   // Fin real de la historia
   mensajes.value.push({ tipo: 'sistema', texto: `📊 Afectación: ${affection.value}/100`, hora: new Date() })
   scrollAbajo()
+  // El bot se desconecta: dramático, ya no está disponible
+  const horaDesc = new Date().toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' })
+  estadoBot.value = `desconectado · últ. vez hoy a las ${horaDesc}`
+  guardarCache()
+  if (sesionId.value) {
+    finalizarSesion(sesionId.value, nodo.id)
+      .catch(e => console.warn('No se pudo marcar finalizado:', e.message))
+  }
+  // Tiempo para leer los últimos mensajes y luego aparece el cierre lentamente
+  setTimeout(() => { mostrarFinal.value = true }, 7000)
+}
+
+// Datos del entorno del jugador (navegador, dispositivo, idioma...) para asociar a la sesión
+function recolectarDispositivo() {
+  const ua = navigator.userAgent || ''
+  let navegador = 'Desconocido'
+  if (/Edg\//.test(ua)) navegador = 'Edge'
+  else if (/OPR\/|Opera/.test(ua)) navegador = 'Opera'
+  else if (/Firefox\//.test(ua)) navegador = 'Firefox'
+  else if (/Chrome\//.test(ua)) navegador = 'Chrome'
+  else if (/Safari\//.test(ua)) navegador = 'Safari'
+  let so = 'Desconocido'
+  if (/Android/.test(ua)) so = 'Android'
+  else if (/iPhone|iPad|iPod/.test(ua)) so = 'iOS'
+  else if (/Windows/.test(ua)) so = 'Windows'
+  else if (/Mac OS/.test(ua)) so = 'macOS'
+  else if (/Linux/.test(ua)) so = 'Linux'
+  const movil = /Android|iPhone|iPad|iPod|Mobile/i.test(ua)
+  return {
+    navegador,
+    so,
+    movil,
+    dispositivo: movil ? (/iPad|Tablet/.test(ua) ? 'Tablet' : 'Móvil') : 'Escritorio',
+    idioma: navigator.language || null,
+    zonaHoraria: Intl.DateTimeFormat().resolvedOptions().timeZone || null,
+    pantalla: `${window.screen?.width || 0}x${window.screen?.height || 0}`,
+    userAgent: ua.slice(0, 300)
+  }
+}
+
+function elegirEstrellas(n) { calificacion.value = n }
+
+function enviarCalificacion() {
+  if (!calificacion.value) return
+  mostrarFinal.value = false
   guardarCache()
   if (!sesionId.value) return
-  finalizarSesion(sesionId.value, nodo.id)
-    .catch(e => console.warn('No se pudo marcar finalizado:', e.message))
+  guardarCalificacion(sesionId.value, { estrellas: calificacion.value, device: recolectarDispositivo() })
+    .then(() => console.log('⭐ Calificación guardada:', calificacion.value))
+    .catch(e => console.warn('No se pudo guardar calificación:', e.message))
 }
+
+function omitirCalificacion() { mostrarFinal.value = false }
 
 function procesarAuto(nodoId) {
   const nodo = getNodo(nodoId)
@@ -379,6 +439,8 @@ function reiniciarTodo() {
   bloqueActual.value = bloques[0]?.meta?.blockId || 'bloque_desconocido'
   mostrandoOpciones.value = false; opcionesActuales.value = []
   error.value = ''; mostrandoMenu.value = false; escribiendo.value = false
+  estadoBot.value = 'en línea'; mostrarFinal.value = false
+  calificacion.value = 0; estrellaHover.value = 0
 }
 function restaurarPartida() {
   const estado = cargarCache()
@@ -394,6 +456,11 @@ function restaurarPartida() {
   elecciones.value = estado.elecciones || []
   flags.value = estado.flags || []
   bloqueActual.value = estado.bloqueActual || bloques[0]?.meta?.blockId || 'bloque_desconocido'
+  calificacion.value = estado.calificacion || 0
+  // Si la partida restaurada ya había terminado, el bot sigue desconectado
+  if (nodoActual.value === 'CHAPTER_1_END' || getNodo(nodoActual.value)?.speaker === 'system') {
+    estadoBot.value = 'desconectado'
+  }
   pantalla.value = 'chat'
   hayPartidaGuardada.value = true
   mostrandoMenu.value = false
@@ -507,8 +574,8 @@ onMounted(() => {
     <div v-else-if="pantalla === 'chat'" class="pantalla chat">
       <header class="header">
         <div class="h-info">
-          <div class="avatar-s">{{ botSeleccionado[0] }}</div>
-          <div><h2>{{ botSeleccionado }}</h2><span class="online">en línea</span></div>
+          <div class="avatar-s" :class="{ off: estadoBot !== 'en línea' }">{{ botSeleccionado[0] }}</div>
+          <div><h2>{{ botSeleccionado }}</h2><span class="online" :class="{ off: estadoBot !== 'en línea' }">{{ estadoBot }}</span></div>
         </div>
         <div class="menu-wrapper">
           <button class="btn-menu" @click="toggleMenu">⋯</button>
@@ -558,6 +625,30 @@ onMounted(() => {
       <!-- Opciones -->
       <div v-if="mostrandoOpciones" class="opciones">
         <button v-for="(op, i) in opcionesActuales" :key="i" @click="elegirOpcion(op)" class="op-btn">{{ op.text }}</button>
+      </div>
+
+      <!-- Overlay fin de capítulo -->
+      <div v-if="mostrarFinal" class="final-overlay">
+        <div class="final-card">
+          <div class="icono">🎬</div>
+          <h1>Fin del Capítulo 1</h1>
+          <p class="subtitulo">Gracias por jugarlo. Tu opinión será tomada en cuenta para una posible segunda parte y para corregir este capítulo.</p>
+          <p class="final-label">¿Cómo calificas este capítulo?</p>
+          <div class="estrellas">
+            <button
+              v-for="n in 5"
+              :key="n"
+              class="estrella"
+              :class="{ activa: n <= (estrellaHover || calificacion) }"
+              @click="elegirEstrellas(n)"
+              @mouseenter="estrellaHover = n"
+              @mouseleave="estrellaHover = 0"
+              aria-label="Calificar con {{ n }} estrellas"
+            >★</button>
+          </div>
+          <button @click="enviarCalificacion()" class="btn-jugar" :disabled="!calificacion">Enviar calificación</button>
+          <button @click="omitirCalificacion()" class="btn-omitir">Ahora no</button>
+        </div>
       </div>
     </div>
   </div>
@@ -691,6 +782,41 @@ h1 { margin: 0 0 8px; font-size: 26px; font-weight: 600; color: #f0f0f0; }
 .intro-sub { font-size: 16px; color: #aaa; font-style: italic; line-height: 1.6; }
 @keyframes introEntrar { from { opacity: 0; } to { opacity: 1; } }
 @keyframes introSubir { from { opacity: 0; transform: translateY(16px); } to { opacity: 1; transform: translateY(0); } }
+
+/* Estado offline del bot */
+.avatar-s.off { background: #3a3a3a; color: #888; }
+.online.off { color: #888; }
+
+/* Overlay fin de capítulo */
+.final-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,0.85);
+  display: flex; align-items: center; justify-content: center; padding: 20px;
+  animation: finalEntrar 1.2s ease both;
+}
+@keyframes finalEntrar { from { opacity: 0; } to { opacity: 1; } }
+.final-card {
+  width: 100%; max-width: 380px; background: #161616; border: 1px solid #222;
+  border-radius: 20px; padding: 36px 24px; text-align: center;
+  box-shadow: 0 10px 40px rgba(0,0,0,0.6);
+  animation: introSubir 1.2s ease both;
+  max-height: 90dvh; overflow-y: auto;
+}
+.final-label { font-size: 15px; font-weight: 500; color: #e0e0e0; margin: 20px 0 10px; }
+.estrellas { display: flex; justify-content: center; gap: 6px; margin-bottom: 20px; }
+.estrella {
+  background: none; border: none; cursor: pointer;
+  font-size: 40px; line-height: 1; color: #3a3a3a;
+  transition: color .15s, transform .15s; padding: 2px;
+}
+.estrella.activa { color: #ffc107; }
+.estrella:active { transform: scale(1.2); }
+.btn-omitir {
+  width: 100%; margin-top: 10px; padding: 12px;
+  background: transparent; border: none; border-radius: 12px;
+  color: #888; font-size: 15px; cursor: pointer;
+}
+.btn-omitir:hover { color: #bbb; }
 
 /* Responsive */
 @media (max-width: 480px) {

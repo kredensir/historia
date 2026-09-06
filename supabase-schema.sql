@@ -45,3 +45,10 @@ ALTER TABLE sesiones_juego ADD COLUMN IF NOT EXISTS ubicacion_ciudad TEXT;
 DROP POLICY IF EXISTS "Permitir update anónimo" ON sesiones_juego;
 CREATE POLICY "Permitir update anónimo" ON sesiones_juego
   FOR UPDATE TO anon USING (true) WITH CHECK (true);
+
+-- Calificación del capítulo (1-5 estrellas, NULL = sin calificar)
+ALTER TABLE sesiones_juego ADD COLUMN IF NOT EXISTS calificacion SMALLINT
+  CHECK (calificacion IS NULL OR (calificacion >= 1 AND calificacion <= 5));
+
+-- Metadatos del entorno del jugador (navegador, SO, dispositivo, idioma, zona horaria...)
+ALTER TABLE sesiones_juego ADD COLUMN IF NOT EXISTS meta_jugador JSONB DEFAULT '{}'::jsonb;
