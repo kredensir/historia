@@ -3,10 +3,11 @@ import { ref, onMounted, watch, nextTick } from 'vue'
 import { guardarSesion, actualizarProgreso, actualizarUbicacion, finalizarSesion } from './supabase.js'
 import bloque1 from './cap1_bloque1.json'
 import bloque2 from './capitulo1_bloque2.json'
+import bloque3 from './capitulo1_bloque3.json'
 
 // Bloques en orden de la historia. Para agregar más (cap1_bloque3, cap2_bloque1...),
 // importar el JSON y agregarlo a este array: la transición es automática e invisible.
-const bloques = [bloque1, bloque2]
+const bloques = [bloque1, bloque2, bloque3]
 
 // Mapa unificado de nodos + índice del bloque al que pertenece cada uno
 const nodesMap = {}
@@ -56,9 +57,10 @@ function getBloqueDeNodo(id) {
   const i = nodeBloque[id]
   return i !== undefined ? bloques[i] : null
 }
-// Marcador de fin de bloque: nodo system o id BLOCK_*_END
+// Marcador de fin de bloque: id BLOCK_*/CHAPTER_* o system sin next.
+// Un system CON next es una dirección invisible (ej. efecto de tipeo) y continúa.
 function esFinDeBloque(nodo) {
-  return !!nodo && (nodo.speaker === 'system' || nodo.id.startsWith('BLOCK_'))
+  return !!nodo && (nodo.id.startsWith('BLOCK_') || nodo.id.startsWith('CHAPTER_') || (nodo.speaker === 'system' && !nodo.next))
 }
 // Sincroniza bloqueActual según el nodo en curso
 function syncBloque(nodoId) {
@@ -87,7 +89,27 @@ function interpolar(texto) {
     .replace(/\{usuario\}/g, jugador)
     .replace(/\{bot\}/g, bot)
 }
-function formatearTexto(t) { if (!t) return ''; return interpolar(t).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>') }
+function formatearTexto(t) { if (!t) return ''; return linkificar(interpolar(t)).replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>').replace(/\*(.+?)\*/g, '<em>$1</em>').replace(/\n/g, '<br>') }
+// Convierte URLs en enlaces clicables (nueva pestaña, sin salir del juego para YouTube embebido)
+function linkificar(texto) {
+  if (!texto) return ''
+  return texto.replace(/https?:\/\/[^\s<]+/g, (url) => {
+    const limpia = url.replace(/[.,;:!?)]+$/, '')
+    const cola = url.slice(limpia.length)
+    return `<a href="${limpia}" target="_blank" rel="noopener">${limpia}</a>${cola}`
+  })
+}
+// Resuelve la imagen: URL absoluta (http/data:) tal cual, relativa con prefijo img/
+function resolverImg(src) {
+  if (!src) return ''
+  if (/^(https?:|data:|blob:)/i.test(src)) return src
+  return 'img/' + src.replace(/^\/all+/, '')
+}
+function extraerYoutubeId(texto) {
+  if (!texto) return null
+  const m = texto.match(/(?:youtube\.com\/(?:watch\?v=|shorts\/|embed\/)|youtu\.be\/)([\w-]{11})/)
+  return m ? m[1] : null
+}
 function formatearHora(d) { return new Date(d).toLocaleTimeString('es-ES', { hour: '2-digit', minute: '2-digit' }) }
 function randomDelay(min, max) { return Math.floor(Math.random() * (max - min + 1)) + min }
 function getEstadoMsg(id) { return estadoMsg.value[id] || 'sent' }
@@ -214,7 +236,7 @@ function enviarMensajeBot(nodo) {
   const texto = getTextoPorAfectacion(nodo)
   const msgId = 'bot_' + Date.now() + '_' + Math.random().toString(36).slice(2)
 
-  mensajes.value.push({ id: msgId, tipo: 'bot', texto, hora: new Date(), nodoId: nodo.id, image: nodo.image || null })
+  mensajes.value.push({ id: msgId, tipo: 'bot', texto, hora: new Date(), nodoId: nodo.id, image: nodo.image || null, youtubeId: extraerYoutubeId(texto) })
 
   setEstadoMsg(msgId, 'sent')
   setTimeout(() => setEstadoMsg(msgId, 'read'), 1000)
@@ -241,10 +263,17 @@ function alCerrarBloque(nodo) {
   persistirProgreso()
 
   if (siguiente && siguiente.nodes?.length) {
-    console.log('➡️ Transición invisible a:', siguiente.meta?.blockId)
+    // Entrada dirigida: el marcador de fin puede mapear la última elección
+    // al nodo de entrada del bloque siguiente.
+    // Ej. en el JSON: "entry_by_choice": { "a": "c3_001a", "b": "c3_001b" }
+    // Sin mapeo (o sin coincidencia) se entra por el primer nodo del bloque.
+    const ultima = elecciones.value[elecciones.value.length - 1]
+    const entradaId = (nodo.entry_by_choice && ultima && nodo.entry_by_choice[ultima.choice_id]) || siguiente.nodes[0].id
+    const entrada = getNodo(entradaId) || siguiente.nodes[0]
+    console.log('➡️ Transición invisible a:', siguiente.meta?.blockId, '| entrada:', entrada.id)
     setTimeout(() => {
       escribiendo.value = true
-      setTimeout(() => { escribiendo.value = false; procesarAuto(siguiente.nodes[0].id) }, randomDelay(1200, 2500))
+      setTimeout(() => { escribiendo.value = false; procesarAuto(entrada.id) }, randomDelay(1200, 2500))
     }, randomDelay(800, 1800))
     return
   }
@@ -265,6 +294,12 @@ function procesarAuto(nodoId) {
   syncBloque(nodo.id)
 
   if (esFinDeBloque(nodo)) { alCerrarBloque(nodo); return }
+
+  if (nodo.speaker === 'system' && nodo.next) {
+    // Dirección invisible: el bot "tipea, borra y vuelve a tipear" y la historia continúa
+    setTimeout(() => { escribiendo.value = true; setTimeout(() => { escribiendo.value = false; procesarAuto(nodo.next) }, randomDelay(1500, 3000)) }, randomDelay(500, 1200))
+    return
+  }
 
   if (nodo.speaker === 'bot') {
     setTimeout(() => { escribiendo.value = true; setTimeout(() => { escribiendo.value = false; enviarMensajeBot(nodo) }, randomDelay(800, 2000)) }, randomDelay(500, 1500))
@@ -352,6 +387,8 @@ function restaurarPartida() {
   nombreUsuario.value = estado.nombreUsuario
   sesionId.value = estado.sesionId
   mensajes.value = estado.mensajes
+  // Compat: partidas guardadas antes del reproductor no traen youtubeId
+  mensajes.value.forEach(m => { if (m.tipo === 'bot' && !m.youtubeId) m.youtubeId = extraerYoutubeId(m.texto) })
   nodoActual.value = estado.nodoActual
   affection.value = estado.affection ?? AFFECTION_INICIAL
   elecciones.value = estado.elecciones || []
@@ -494,7 +531,17 @@ onMounted(() => {
         <div v-for="(msg, i) in mensajes" :key="msg.id || i" :class="['msg', msg.tipo]">
           <div class="burbuja">
             <p v-html="formatearTexto(msg.texto)"></p>
-            <img v-if="msg.image" :src="'img/' + msg.image" class="msg-img" @load="scrollAbajo" onerror="this.style.display='none'" />
+            <iframe
+              v-if="msg.youtubeId"
+              :src="'https://www.youtube-nocookie.com/embed/' + msg.youtubeId"
+              class="msg-video"
+              title="Video de YouTube"
+              frameborder="0"
+              allow="accelerometer; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+              allowfullscreen
+              @load="scrollAbajo"
+            ></iframe>
+            <img v-if="msg.image" :src="resolverImg(msg.image)" class="msg-img" @load="scrollAbajo" onerror="this.style.display='none'" />
             <div v-if="msg.tipo === 'usuario'" class="estado">
               <span v-if="getEstadoMsg(msg.id) === 'sent'" class="ck">✓</span>
               <span v-if="getEstadoMsg(msg.id) === 'delivered'" class="ck">✓✓</span>
@@ -592,7 +639,14 @@ h1 { margin: 0 0 8px; font-size: 26px; font-weight: 600; color: #f0f0f0; }
 .msg.sistema .burbuja { background: #0f0f0f; color: #888; font-size: 12px; text-align: center; padding: 6px 16px; }
 
 /* Imagen */
-.msg-img { width: 100%; max-width: 180px; border-radius: 10px; margin-top: 6px; object-fit: cover; }
+.msg-img { width: 100%; border-radius: 10px; margin-top: 6px; object-fit: cover; }
+
+/* Video embebido (16:9 responsive dentro de la burbuja) */
+.msg-video { width: 100%; aspect-ratio: 16 / 9; border: 0; border-radius: 10px; margin-top: 6px; display: block; background: #000; }
+
+/* Enlaces dentro de las burbujas */
+.burbuja a { color: inherit; text-decoration: underline; word-break: break-all; }
+.msg.bot .burbuja a { color: #5eb2ff; }
 
 /* Estado WhatsApp ✓✓ */
 .estado { display: flex; align-items: center; gap: 2px; margin-top: 2px; float: right; }

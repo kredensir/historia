@@ -1,0 +1,569 @@
+{
+  "meta": {
+    "chapterId": "capitulo_1",
+    "blockId": "bloque_3_cierre",
+    "title": "Capítulo 1 - Bloque 3: La invitación (cierre del capítulo)",
+    "notes": "Continúa después de BLOCK_2_END del bloque 2. El valor de 'affection' y las flags de los bloques 1 y 2 se cargan como estado inicial. Este bloque tiene un solo desenlace narrativo (la invitación a ayudar con la casa), sin finales alternativos por afecto: solo varía el tono de la respuesta final de la jugadora (aceptar, quedar en veremos, o pedir tiempo), y las tres variantes dejan la historia abierta para el capítulo 2. El punto de entrada depende de qué opción se eligió en el nodo c2_019 del bloque 2: si fue la opción 'a' entrar por c3_001a, si fue 'b' por c3_001b, si fue 'c' por c3_001c. Todos los nodos usan únicamente 'text' plano y 'next'/'choices[].next', sin mecanismos condicionales, para máxima compatibilidad con el motor del juego. Placeholders: {{playerName}}, {{botName}}. Se agregó una subtrama de suspenso: el bot menciona de pasada, sin darle importancia, que tocan la puerta varias veces durante la charla (en c3_005, c3_013 y c3_016), y al final del bloque va a revisar, no encuentra a nadie, y el capítulo termina con su mensaje cortado a la mitad como gancho hacia el capítulo 2. Imagen nueva: img_03.png (placeholder)."
+  },
+  "variables": {
+    "affection": {
+      "carried_over_from": "bloque_2_revelacion_casa",
+      "min": 0,
+      "max": 100
+    }
+  },
+  "nodes": [
+    {
+      "id": "c3_001a",
+      "speaker": "bot",
+      "text": "Ojalá tengas razón. Aunque no te voy a mentir, esto de improvisar solo tiene un límite.",
+      "next": "c3_002"
+    },
+    {
+      "id": "c3_001b",
+      "speaker": "bot",
+      "text": "Es gracioso que lo preguntes, porque tenía pensado pedírsela a alguien en particular.",
+      "next": "c3_002"
+    },
+    {
+      "id": "c3_001c",
+      "speaker": "bot",
+      "text": "Gracias, la voy a necesitar. Aunque, pensándolo bien, tal vez no tenga que hacerlo solo.",
+      "next": "c3_002"
+    },
+    {
+      "id": "c3_002",
+      "speaker": "bot",
+      "text": "Ya que estamos hablando de esto... quería preguntarte algo, pero no sé bien cómo va a sonar.",
+      "next": "c3_003"
+    },
+    {
+      "id": "c3_003",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo reaccionas?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Uy, suena serio. Dime ya, no me dejes con la intriga.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_004a"
+        },
+        {
+          "id": "b",
+          "text": "¿Ahora te da vergüenza? Qué novedad en ti.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c3_004b"
+        },
+        {
+          "id": "c",
+          "text": "Bueno, dilo de una vez, no tengo todo el día.",
+          "effect": {
+            "affection": -1
+          },
+          "next": "c3_004c"
+        }
+      ]
+    },
+    {
+      "id": "c3_004a",
+      "speaker": "bot",
+      "text": "Está bien, está bien, allá voy. Dame un segundo, estoy buscando las palabras.",
+      "next": "c3_005"
+    },
+    {
+      "id": "c3_004b",
+      "speaker": "bot",
+      "text": "Novedad, sí. No es algo que me pase seguido, para que sepas.",
+      "next": "c3_005"
+    },
+    {
+      "id": "c3_004c",
+      "speaker": "bot",
+      "text": "Está bien, perdón. Es que quiero decirlo bien, nada más.",
+      "next": "c3_005"
+    },
+    {
+      "id": "c3_005",
+      "speaker": "bot",
+      "text": "Aunque, pensándolo mejor, tal vez debería preguntarle primero a Cami. Se ofreció apenas se enteró de que volví a la ciudad. (Perdón, un segundo, están tocando la puerta. No sé quién será a esta hora, sigo.)",
+      "next": "c3_006"
+    },
+    {
+      "id": "c3_006",
+      "speaker": "player_choice",
+      "prompt": "El nombre te agarra un poco desprevenida. ¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "¿Quién es Cami?",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_007a"
+        },
+        {
+          "id": "b",
+          "text": "Bueno, si ya tienes ayuda, no hay ningún problema.",
+          "effect": {
+            "affection": -3
+          },
+          "next": "c3_007b"
+        },
+        {
+          "id": "c",
+          "text": "Pregúntale a ella entonces, si es tan buena idea.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c3_007c"
+        }
+      ]
+    },
+    {
+      "id": "c3_007a",
+      "speaker": "bot",
+      "text": "Una amiga de la zona, nada más. Aunque, pensándolo bien, prefiero preguntarte a ti primero. Se siente distinto.",
+      "next": "c3_008"
+    },
+    {
+      "id": "c3_007b",
+      "speaker": "bot",
+      "text": "No dije que ya tuviera ayuda confirmada. La mencioné solo para ver cómo reaccionabas, la verdad.",
+      "next": "c3_008"
+    },
+    {
+      "id": "c3_007c",
+      "speaker": "bot",
+      "text": "Jaja, no, tranquila. Prefiero preguntarte a ti. Lo de Cami fue solo para ver cómo reaccionabas.",
+      "next": "c3_008"
+    },
+    {
+      "id": "c3_008",
+      "speaker": "player_choice",
+      "prompt": "Te das cuenta de que te estaba probando. ¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "¿Me estabas probando? Qué maldad la tuya.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c3_009a"
+        },
+        {
+          "id": "b",
+          "text": "No tiene gracia jugar con eso.",
+          "effect": {
+            "affection": -2
+          },
+          "next": "c3_009b"
+        },
+        {
+          "id": "c",
+          "text": "Bueno, funcionó. Lo admito.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_009c"
+        }
+      ]
+    },
+    {
+      "id": "c3_009a",
+      "speaker": "bot",
+      "text": "Un poco, sí. Y funcionó bastante bien, para ser sincero.",
+      "next": "c3_010"
+    },
+    {
+      "id": "c3_009b",
+      "speaker": "bot",
+      "text": "Tienes razón, no fue justo. Perdón, no lo vuelvo a hacer... o tal vez sí, no prometo nada.",
+      "next": "c3_010"
+    },
+    {
+      "id": "c3_009c",
+      "speaker": "bot",
+      "text": "Al menos eres honesta. Eso me gusta.",
+      "next": "c3_010"
+    },
+    {
+      "id": "c3_010",
+      "speaker": "bot",
+      "text": "Bueno, ahora en serio. La cosa es que no tengo a mucha gente en quien confiar para esto, y me gustaría que fueras tú quien me ayude con la casa. Si es que te interesa, claro.",
+      "next": "c3_011"
+    },
+    {
+      "id": "c3_011",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes a eso?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "¿Yo? ¿Por qué yo, entre toda la gente que conoces?",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_012a"
+        },
+        {
+          "id": "b",
+          "text": "No sé si es buena idea pasar tanto tiempo a solas contigo.",
+          "effect": {
+            "affection": 5
+          },
+          "next": "c3_012b"
+        },
+        {
+          "id": "c",
+          "text": "Vaya, no esperaba que me lo pidieras tan directamente.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_012c"
+        }
+      ]
+    },
+    {
+      "id": "c3_012a",
+      "speaker": "bot",
+      "text": "Porque contigo es distinto, siempre lo fue. Además confío en tu criterio, aunque hoy haya quedado un poco en duda con el tema de las preguntas.",
+      "next": "c3_013"
+    },
+    {
+      "id": "c3_012b",
+      "speaker": "bot",
+      "text": "Eh... bueno, no lo había pensado en esos términos, pero ahora que lo dices, se pone interesante la propuesta.",
+      "next": "c3_013"
+    },
+    {
+      "id": "c3_012c",
+      "speaker": "bot",
+      "text": "Sí, bueno, prefiero ser directo contigo. Total ya perdimos suficiente tiempo sin hablarnos, ¿no crees?",
+      "next": "c3_013"
+    },
+    {
+      "id": "c3_013",
+      "speaker": "bot",
+      "text": "Aparte, la verdad es que no quiero pasar estos días completamente solo en esta casa. Sería lindo tener compañía, aunque sea para reírnos de lo mal que se ve todo. Uf, de nuevo tocan la puerta. Raro, no espero a nadie. Bueno, sigo con lo que decía.",
+      "next": "c3_014"
+    },
+    {
+      "id": "c3_014",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo sigues la charla?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Ya te imagino rompiendo algo antes de arreglarlo.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_015a"
+        },
+        {
+          "id": "b",
+          "text": "Con esas manos, seguro terminas peor de lo que empezaste.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_015b"
+        },
+        {
+          "id": "c",
+          "text": "Confía un poco más en ti mismo, no puede ser tan grave.",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c3_015c"
+        }
+      ]
+    },
+    {
+      "id": "c3_015a",
+      "speaker": "bot",
+      "text": "Ey, un poco de fe, por favor. Aunque, pensándolo bien, no te falta razón.",
+      "next": "c3_016"
+    },
+    {
+      "id": "c3_015b",
+      "speaker": "bot",
+      "text": "Estas manos sobrevivieron cosas peores, para que sepas. Aunque no te voy a mentir, la última vez que usé un martillo terminé con un chichón.",
+      "next": "c3_016"
+    },
+    {
+      "id": "c3_015c",
+      "speaker": "bot",
+      "text": "Gracias por el voto de confianza. Vamos a ver si me lo termino ganando.",
+      "next": "c3_016"
+    },
+    {
+      "id": "c3_016",
+      "speaker": "bot",
+      "text": "Ah, y otra cosa: mientras ordenaba unas cajas viejas, encontré algo de Bruno que me dejó pensando. Después te cuento, cuando estemos ahí en persona. (Y otra vez tocan. Ya van como cinco veces. Qué inoportuno, en serio.)",
+      "next": "c3_017"
+    },
+    {
+      "id": "c3_017",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes a esa intriga?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "¿Qué encontraste? No me dejes con la duda.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_018a"
+        },
+        {
+          "id": "b",
+          "text": "Eso suena raro. ¿Estás bien?",
+          "effect": {
+            "affection": 4
+          },
+          "next": "c3_018b"
+        },
+        {
+          "id": "c",
+          "text": "Bueno, guárdatelo para cuando nos veamos entonces.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_018c"
+        }
+      ]
+    },
+    {
+      "id": "c3_018a",
+      "speaker": "bot",
+      "text": "No, no te voy a arruinar la sorpresa por chat. Es mejor en persona, créeme.",
+      "next": "c3_019"
+    },
+    {
+      "id": "c3_018b",
+      "speaker": "bot",
+      "text": "Sí, tranquila, estoy bien. Es raro, nada más. Ya vas a entender cuando lo veas.",
+      "next": "c3_019"
+    },
+    {
+      "id": "c3_018c",
+      "speaker": "bot",
+      "text": "Buena decisión. Además, así tienes una razón más para venir.",
+      "next": "c3_019"
+    },
+    {
+      "id": "c3_019",
+      "speaker": "bot",
+      "text": "Entonces, ¿qué dices? ¿Te animas a venir este fin de semana, aunque sea un par de horas?",
+      "next": "c3_020"
+    },
+    {
+      "id": "c3_020",
+      "speaker": "player_choice",
+      "prompt": "Este es el momento. ¿Cómo respondes?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Sí, cuenta conmigo. Ahí voy a estar.",
+          "effect": {
+            "affection": 8
+          },
+          "next": "c3_021a"
+        },
+        {
+          "id": "b",
+          "text": "Tal vez... no prometo nada, pero es probable que sí.",
+          "effect": {
+            "affection": 5
+          },
+          "next": "c3_021b"
+        },
+        {
+          "id": "c",
+          "text": "No sé, déjame pensarlo unos días.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_021c"
+        }
+      ]
+    },
+    {
+      "id": "c3_021a",
+      "speaker": "bot",
+      "text": "En serio, me alegra mucho. No esperaba que dijeras que sí tan rápido, para ser honesto.",
+      "next": "c3_022a"
+    },
+    {
+      "id": "c3_022a",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo cierras?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "No te acostumbres, es solo por esta vez.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_023a"
+        },
+        {
+          "id": "b",
+          "text": "Tampoco iba a dejarte solo con todo ese desastre.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_023a"
+        }
+      ]
+    },
+    {
+      "id": "c3_023a",
+      "speaker": "bot",
+      "text": "Bueno, como sea, ahí te espero. Avísame cualquier cosa que necesites antes de venir.",
+      "next": "c3_024"
+    },
+    {
+      "id": "c3_021b",
+      "speaker": "bot",
+      "text": "Me lo tomo como un sí a medias, entonces. Ya me conformo con eso por ahora.",
+      "next": "c3_022b"
+    },
+    {
+      "id": "c3_022b",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo cierras?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Tómalo como quieras, jaja.",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_023b"
+        },
+        {
+          "id": "b",
+          "text": "No prometas nada tampoco tú, tal vez cambio de opinión.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_023b"
+        }
+      ]
+    },
+    {
+      "id": "c3_023b",
+      "speaker": "bot",
+      "text": "Trato hecho. De cualquier forma, la puerta va a estar abierta para ti, decidas lo que decidas.",
+      "next": "c3_024"
+    },
+    {
+      "id": "c3_021c",
+      "speaker": "bot",
+      "text": "Está bien, tómate tu tiempo. No hay apuro, aunque no te voy a mentir: espero que la respuesta sea que sí.",
+      "next": "c3_022c"
+    },
+    {
+      "id": "c3_022c",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo cierras?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Vamos a ver cómo me siento estos días.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c3_023c"
+        },
+        {
+          "id": "b",
+          "text": "No prometo nada, pero tampoco digo que no.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_023c"
+        }
+      ]
+    },
+    {
+      "id": "c3_023c",
+      "speaker": "bot",
+      "text": "Con eso me alcanza por ahora. Piénsalo con calma, mientras yo sigo peleando con el polvo de esta casa.",
+      "next": "c3_024"
+    },
+    {
+      "id": "c3_024",
+      "speaker": "bot",
+      "text": "Uf, perdón, esto ya es ridículo. Llevan como diez minutos tocando la puerta sin parar. Dame un segundo, voy a ver quién es.",
+      "next": "c3_025"
+    },
+    {
+      "id": "c3_025",
+      "speaker": "bot",
+      "text": "Mira esto.",
+      "image": "https://media.istockphoto.com/id/157393020/es/foto/calle-de-la-ciudad.jpg?s=612x612&w=0&k=20&c=3rKpKoU3KfRTgXF0BUNIgh5GYxIfvsEwEykVWw5Nc9g=",
+      "image_alt": "Foto de la entrada de la casa vista desde adentro, con la puerta abierta y la calle vacía de noche",
+      "next": "c3_026"
+    },
+    {
+      "id": "c3_026",
+      "speaker": "bot",
+      "text": "No hay nadie. En serio, no hay nadie. Esto es rarísimo, me estoy volviendo loco.",
+      "next": "c3_027"
+    },
+    {
+      "id": "c3_027",
+      "speaker": "bot",
+      "text": "Seguro es algún gracioso del barrio que se enteró de que volví y que estoy solo. No tiene ninguna gracia, la verdad.",
+      "next": "c3_028"
+    },
+    {
+      "id": "c3_028",
+      "speaker": "player_choice",
+      "prompt": "¿Cómo respondes antes de que siga?",
+      "choices": [
+        {
+          "id": "a",
+          "text": "Qué raro eso... ¿seguro que no había nadie?",
+          "effect": {
+            "affection": 2
+          },
+          "next": "c3_029"
+        },
+        {
+          "id": "b",
+          "text": "Tal vez es una broma de alguien del barrio, no te preocupes tanto.",
+          "effect": {
+            "affection": 1
+          },
+          "next": "c3_029"
+        },
+        {
+          "id": "c",
+          "text": "Ojo, eso me está poniendo nerviosa a mí también.",
+          "effect": {
+            "affection": 3
+          },
+          "next": "c3_029"
+        }
+      ]
+    },
+    {
+      "id": "c3_029",
+      "speaker": "bot",
+      "text": "Voy a revisar las cámaras de la entrada, si es que todavía quedan conectadas. Espera, creo que alguien está—",
+      "next": "CHAPTER_1_END"
+    },
+    {
+      "id": "CHAPTER_1_END",
+      "speaker": "system",
+      "note": "El mensaje del bot se corta a la mitad. Se desconecta de la conversación y no vuelve a responder por el resto del capítulo. Termina así, con la invitación de fin de semana ya acordada (en el tono que haya resultado de c3_020: aceptada, en veremos, o pendiente de pensar) y con la incógnita abierta de qué interrumpió el mensaje. El capítulo 2 retoma esta pregunta como gancho inicial."
+    }
+  ]
+}

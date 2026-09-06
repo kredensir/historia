@@ -365,7 +365,7 @@
       "id": "c1_011",
       "speaker": "bot",
       "text": "Mira, encontré esto revisando fotos viejas. No sé por qué las guardé tanto tiempo.",
-      "image": "img_01.png",
+      "image": "https://cdn.jsdelivr.net/gh/kredensir/FriendzoneadoFiles/img/chapter_1/img_01.webp",
       "image_alt": "Foto grupal antigua del grupo de amigos, incluye al jugador y al bot",
       "next": "c1_012"
     },
@@ -1358,7 +1358,13 @@
     {
       "id": "c1_music_link_send",
       "speaker": "bot",
-      "text": "Mira este video: https://www.youtube.com/watch?v=dQw4w9WgXcQ . Primero míralo entero, lee bien la letra, y después seguimos hablando.",
+      "text": "Mira este video... Primero míralo entero, lee la letra, y después seguimos hablando.",
+      "next": "c1_music_link_send_2"
+    },
+        {
+      "id": "c1_music_link_send_2",
+      "speaker": "bot",
+      "text": "https://www.youtube.com/watch?v=k87fVgLc1_w",
       "next": "c1_music_link_wait"
     },
     {
