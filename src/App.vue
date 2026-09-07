@@ -515,6 +515,9 @@ onMounted(() => {
         <div class="icono">⚠️</div>
         <h1>Antes de empezar</h1>
         <p class="subtitulo">Este juego es solo una versión de prueba. Puede contener errores, la historia está en desarrollo y puede no estar disponible en cualquier momento.</p>
+        <sub>by Gmelas &amp; Kredensir</sub>
+        <p class="subtitulo">(en desarrollo)</p>
+
         <div class="form">
           <button @click="continuarAviso()" class="btn-jugar">Entendido, continuar</button>
         </div>
